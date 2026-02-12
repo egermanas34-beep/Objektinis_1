@@ -4,6 +4,7 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <limits>
 //using namespace std;
 using std::string;
 using std::cout;
@@ -25,32 +26,28 @@ struct Studentas {
 };
 void outputas(const vector<Studentas> &grupe);
 
+int skaiciu_mastelis(const string &prompt, int min_val, int max_val);
+
 int main(){
 
     Studentas A;
     vector<Studentas> grupe;
-    cout<<"Kiek studentu yra grupeje:";
-    int m;
-    cin>>m; 
-    cout<<"galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ";
-    int pasirinkimas;
-    cin>>pasirinkimas;
+    int m = skaiciu_mastelis("Kiek studentu yra grupeje: ", 1, 1000);
+    int pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
     for(int ii=0;ii<m;ii++){
     cout<<"Iveskite studento varda ir pavarde: ";
     cin>>A.Vardas>>A.Pavarde;
-    cout<<"Iveskite semestro pazymius : \n Kiek pazymiu bus ivesta? ";
-    int n,temp,sum=0;
-     cin>>n;
+    cout<<"Iveskite semestro pazymius : \n";
+    int n = skaiciu_mastelis("Kiek pazymiu bus ivesta? ", 1, 100);
+    int temp, sum=0;
     for(int i=0;i<n;i++){
-        cout<<"Iveskite "<<i+1<<" pazymi is "<<n<<": ";
-        cin>>temp;
+        temp = skaiciu_mastelis("Iveskite " + std::to_string(i + 1) + " pazymi is " + std::to_string(n) + ": ", 1, 10);
 
         A.paz.push_back(temp);
         sum+=temp;
     }
     
-    cout<<"Iveskite egzamino pazymi: ";
-    cin>>A.egz;
+    A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
     if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
     else {std::sort (A.paz.begin(),A.paz.end());
 if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2];
@@ -71,3 +68,23 @@ void outputas(const vector<Studentas> &grupe)
    // for(auto a:A.paz){cout<<setw(3)<<a;}
     //cout<<setw(10)<<A.egz;
     cout<<setw(20)<<fixed<<setprecision(2)<<A.rez<<endl;}}
+
+int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
+{
+    int value;
+    while (true) {
+        cout << prompt;
+        cin >> value;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "Neteisinga ivestis. Iveskite skaiciu.\n";
+            continue;
+        }
+        if (value < min_val || value > max_val) {
+            cout << "Neteisinga ivestis. Turi buti nuo " << min_val << " iki " << max_val << ".\n";
+            continue;
+        }
+        return value;
+    }
+}

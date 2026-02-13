@@ -41,10 +41,15 @@ int main(){
 
 void outputas(const vector<Studentas> &grupe)
 {for(auto A:grupe){
-    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<endl;
-   // for(auto a:A.paz){cout<<setw(3)<<a;}
+    cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis:"<<endl;
+    cout<<" ----------------------------------------------"<<endl;
+    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.rez<<endl;
+
+    //for(auto a:A.paz){cout<<setw(3)<<a;}
     //cout<<setw(10)<<A.egz;
-    cout<<setw(20)<<fixed<<setprecision(2)<<A.rez<<endl;}}
+    //cout<<setw(20)<<fixed<<setprecision(2)<<A.rez<<endl;
+    }
+    }
 
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
 {

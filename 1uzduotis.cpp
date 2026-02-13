@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <algorithm>
 #include <limits>
-//using namespace std;
 using std::string;
 using std::cout;
 using std::cin;
@@ -16,6 +15,7 @@ using std::setw;
 using std::vector;
 using std::fixed;
 using std::setprecision;
+
 struct Studentas {
      string Vardas="A", Pavarde="B";
    // int *paz;
@@ -24,39 +24,16 @@ struct Studentas {
     double rez;
     
 };
+void inputas(Studentas &A, vector<Studentas> &grupe);
 void outputas(const vector<Studentas> &grupe);
-
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val);
 
 int main(){
 
     Studentas A;
     vector<Studentas> grupe;
-    int m = skaiciu_mastelis("Kiek studentu yra grupeje: ", 1, 1000);
-    int pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
-    for(int ii=0;ii<m;ii++){
-    cout<<"Iveskite studento varda ir pavarde: ";
-    cin>>A.Vardas>>A.Pavarde;
-    cout<<"Iveskite semestro pazymius : \n";
-    int n = skaiciu_mastelis("Kiek pazymiu bus ivesta? ", 1, 100);
-    int temp, sum=0;
-    for(int i=0;i<n;i++){
-        temp = skaiciu_mastelis("Iveskite " + std::to_string(i + 1) + " pazymi is " + std::to_string(n) + ": ", 1, 10);
-
-        A.paz.push_back(temp);
-        sum+=temp;
-    }
-    
-    A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
-    if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-    else {std::sort (A.paz.begin(),A.paz.end());
-if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2];
-else  A.rez=(A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0;}
-    grupe.push_back(A);
-    A.paz.clear();
-    }
-
-
+  
+    inputas(A, grupe);
     outputas(grupe);
     return 0;
 }
@@ -88,3 +65,28 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
         return value;
     }
 }
+void inputas(Studentas &A, vector<Studentas> &grupe)
+{
+    int m = skaiciu_mastelis("Kiek studentu yra grupeje: ", 1, 1000);
+    int pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
+    for(int ii=0;ii<m;ii++){
+    cout<<"Iveskite studento varda ir pavarde: ";
+    cin>>A.Vardas>>A.Pavarde;
+    cout<<"Iveskite semestro pazymius : \n";
+    int n = skaiciu_mastelis("Kiek pazymiu bus ivesta? ", 1, 100);
+    int temp, sum=0;
+    for(int i=0;i<n;i++){
+        temp = skaiciu_mastelis("Iveskite " + std::to_string(i + 1) + " pazymi is " + std::to_string(n) + ": ", 1, 10);
+
+        A.paz.push_back(temp);
+        sum+=temp;
+    }
+    
+    A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
+    if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
+    else {std::sort (A.paz.begin(),A.paz.end());
+if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2];
+else  A.rez=(A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0;}
+    grupe.push_back(A);
+    A.paz.clear();
+    }}

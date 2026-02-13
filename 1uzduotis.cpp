@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <limits>
+#include <cctype>
 using std::string;
 using std::cout;
 using std::cin;
@@ -24,6 +25,7 @@ struct Studentas {
     double rez;
     
 };
+const int Maxpazymiu=10;
 void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
 void outputas(const vector<Studentas> &grupe, int pasirinkimas);
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val);
@@ -81,15 +83,23 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
     for(int ii=0;ii<m;ii++){
     A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
     A.Pavarde = vardo_skaitymas("Iveskite studento pavarde: ");
+    cout<<"is viso gali buti ivesta "<<Maxpazymiu<<" pazymiu."<<endl;
     cout<<"Iveskite semestro pazymius : \n";
-    int n = skaiciu_mastelis("Kiek pazymiu bus ivesta? ", 1, 100);
+    int n = skaiciu_mastelis("Kiek pazymiu bus ivesta? ", 1, Maxpazymiu);
     int temp, sum=0;
+    
     for(int i=0;i<n;i++){
         temp = skaiciu_mastelis("Iveskite " + std::to_string(i + 1) + " pazymi is " + std::to_string(n) + ": ", 1, 10);
 
         A.paz.push_back(temp);
         sum+=temp;
     }
+    if(pasirinkimas==1 && n<Maxpazymiu) {for(int i=0;i<Maxpazymiu-n;i++){
+        
+
+        A.paz.push_back(0);
+        
+    }}
     
     A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
     if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  

@@ -24,8 +24,8 @@ struct Studentas {
     double rez;
     
 };
-void inputas(Studentas &A, vector<Studentas> &grupe);
-void outputas(const vector<Studentas> &grupe);
+void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
+void outputas(const vector<Studentas> &grupe, int pasirinkimas);
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val);
 string vardo_skaitymas(const string &prompt);
 
@@ -33,25 +33,28 @@ int main(){
 
     Studentas A;
     vector<Studentas> grupe;
-  
-    inputas(A, grupe);
-    outputas(grupe);
+    int pasirinkimas;
+    inputas(A, grupe, pasirinkimas);
+    outputas(grupe, pasirinkimas);
     return 0;
 }
 
 
-void outputas(const vector<Studentas> &grupe)
-{for(auto A:grupe){
-    cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis:"<<endl;
+void outputas(const vector<Studentas> &grupe, int pasirinkimas)
+{if(pasirinkimas==1) {
+    for(auto A:grupe){
+    cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis(vid.):"<<endl;
     cout<<" ----------------------------------------------"<<endl;
-    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.rez<<endl;
-
+    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.rez<<endl;}}
+else { for(auto A:grupe){
+    cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis(med.):"<<endl;
+    cout<<" ----------------------------------------------"<<endl;
+    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.rez<<endl;}
     //for(auto a:A.paz){cout<<setw(3)<<a;}
-    //cout<<setw(10)<<A.egz;
-    //cout<<setw(20)<<fixed<<setprecision(2)<<A.rez<<endl;
-    }
-    }
 
+    }
+    
+}
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
 {
     int value;
@@ -71,10 +74,10 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
         return value;
     }
 }
-void inputas(Studentas &A, vector<Studentas> &grupe)
+void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 {
     int m = skaiciu_mastelis("Kiek studentu yra grupeje: ", 1, 1000);
-    int pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
+     pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
     for(int ii=0;ii<m;ii++){
     A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
     A.Pavarde = vardo_skaitymas("Iveskite studento pavarde: ");

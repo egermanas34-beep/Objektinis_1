@@ -27,6 +27,7 @@ struct Studentas {
 void inputas(Studentas &A, vector<Studentas> &grupe);
 void outputas(const vector<Studentas> &grupe);
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val);
+string vardo_skaitymas(const string &prompt);
 
 int main(){
 
@@ -75,8 +76,8 @@ void inputas(Studentas &A, vector<Studentas> &grupe)
     int m = skaiciu_mastelis("Kiek studentu yra grupeje: ", 1, 1000);
     int pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
     for(int ii=0;ii<m;ii++){
-    cout<<"Iveskite studento varda ir pavarde: ";
-    cin>>A.Vardas>>A.Pavarde;
+    A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
+    A.Pavarde = vardo_skaitymas("Iveskite studento pavarde: ");
     cout<<"Iveskite semestro pazymius : \n";
     int n = skaiciu_mastelis("Kiek pazymiu bus ivesta? ", 1, 100);
     int temp, sum=0;
@@ -95,3 +96,34 @@ else  A.rez=(A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0;}
     grupe.push_back(A);
     A.paz.clear();
     }}
+    string vardo_skaitymas(const string &prompt)
+{
+    string value;
+    while (true) {
+        cout << prompt;
+        cin >> value;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "Neteisinga ivestis. Iveskite raides arba raides su skaiciais.\n";
+            continue;
+        }
+        bool has_alpha = false;// Patikriname, ar yra bent viena raidė
+        bool all_alnum = true;// Patikriname, ar visi simboliai yra raidės arba skaičiai
+        for (unsigned char ch : value) {
+            if (std::isalpha(ch)) {// Jei yra bent viena raidė, nustatome has_alpha į true
+                has_alpha = true;
+                continue;
+            }
+            if (!std::isdigit(ch)) {// Jei simbolis nėra nei raidė, nei skaičius, nustatome all_alnum į false ir išeiname iš ciklo
+                all_alnum = false;
+                break;
+            }
+        }
+        if (!all_alnum || !has_alpha) {
+            cout << "Neteisinga ivestis. Iveskite raides arba raides su skaiciais.\n";
+            continue;
+        }
+        return value;
+    }
+}

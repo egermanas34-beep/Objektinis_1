@@ -104,8 +104,8 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
     A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
     if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
     else {std::sort (A.paz.begin(),A.paz.end());
-if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2];
-else  A.rez=(A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0;}
+if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
     grupe.push_back(A);
     A.paz.clear();
     }}
@@ -140,3 +140,4 @@ else  A.rez=(A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0;}
         return value;
     }
 }
+

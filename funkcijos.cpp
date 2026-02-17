@@ -70,15 +70,15 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
         if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
         else {std::sort (A.paz.begin(),A.paz.end());
-        if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2];
-        else  A.rez=(A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0;}
+        if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+        else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
         grupe.push_back(A);
         A.paz.clear();
         cout<<"Jei norite ivesti dar viena studenta, iveskite 1, jei ne - 0: ";
         cin>>m;
     }
 }
-    string vardo_skaitymas(const string &prompt)
+string vardo_skaitymas(const string &prompt)
 {
     string value;
     while (true) {
@@ -107,5 +107,41 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
             continue;
         }
         return value;
+    }
+}
+void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
+{
+    int m = skaiciu_mastelis("Kiek yra studentu? ", 1, 1000);
+    pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
+    for(int i=0;i<m;i++)
+    {
+        A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
+        A.Pavarde = vardo_skaitymas("Iveskite studento pavarde: ");
+        cout<<"is viso gali buti ivesta "<<Maxpazymiu<<" pazymiu."<<endl;
+        cout<<"Iveskite semestro pazymius : \n";
+        int n = skaiciu_mastelis("Kiek pazymiu norite sugeneruoti? ", 1, Maxpazymiu);
+        int temp, sum=0;
+        for(int ii=0;ii<n;ii++)
+        {
+            temp = rand() % 10 + 1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
+            cout<<"Sugeneruotas "<<ii+1<<" pazymys: "<<temp<<endl;
+            A.paz.push_back(temp);
+            sum+=temp;
+        }
+        if(pasirinkimas==1 && n<Maxpazymiu) 
+        {
+            for(int i=0;i<Maxpazymiu-n;i++)
+            {
+            A.paz.push_back(0);
+            }
+        }
+        A.egz = rand() % 10 + 1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
+        cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
+        if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
+        else {std::sort (A.paz.begin(),A.paz.end());
+        if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+        else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
+        grupe.push_back(A);
+        A.paz.clear();
     }
 }

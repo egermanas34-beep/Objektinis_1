@@ -35,37 +35,49 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
 }
 void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 {
-    int m = skaiciu_mastelis("Kiek studentu yra grupeje: ", 1, 1000);
+    int m = 1;
+    int k = 1;
      pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
-    for(int ii=0;ii<m;ii++){
-    A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
-    A.Pavarde = vardo_skaitymas("Iveskite studento pavarde: ");
-    cout<<"is viso gali buti ivesta "<<Maxpazymiu<<" pazymiu."<<endl;
-    cout<<"Iveskite semestro pazymius : \n";
-    int n = skaiciu_mastelis("Kiek pazymiu bus ivesta? ", 1, Maxpazymiu);
-    int temp, sum=0;
+    while (m!=0)
+    {
+        A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
+        A.Pavarde = vardo_skaitymas("Iveskite studento pavarde: ");
+        cout<<"is viso gali buti ivesta "<<Maxpazymiu<<" pazymiu."<<endl;
+        cout<<"Iveskite semestro pazymius : \n";
+        int n = 1;
+        int temp, sum=0;
+        while (k!=0 && n<=Maxpazymiu)
+        {
+            
+            temp = skaiciu_mastelis("Iveskite " + std::to_string(n) + " pazymi : ", 1, 10);
+            A.paz.push_back(temp);
+            sum+=temp;
+           
+            cout<<"Jei norite ivesti dar viena pazymi, iveskite 1, jei ne - 0: ";
+        
+            k=skaiciu_mastelis("", 0, 1);
+            
+            n++;
+        }
+        if(pasirinkimas==1 && n<Maxpazymiu) 
+        {
+            for(int i=0;i<Maxpazymiu-n;i++)
+            {
+            A.paz.push_back(0);
+            }
+        }
     
-    for(int i=0;i<n;i++){
-        temp = skaiciu_mastelis("Iveskite " + std::to_string(i + 1) + " pazymi is " + std::to_string(n) + ": ", 1, 10);
-
-        A.paz.push_back(temp);
-        sum+=temp;
+        A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
+        if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
+        else {std::sort (A.paz.begin(),A.paz.end());
+        if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2];
+        else  A.rez=(A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0;}
+        grupe.push_back(A);
+        A.paz.clear();
+        cout<<"Jei norite ivesti dar viena studenta, iveskite 1, jei ne - 0: ";
+        cin>>m;
     }
-    if(pasirinkimas==1 && n<Maxpazymiu) {for(int i=0;i<Maxpazymiu-n;i++){
-        
-
-        A.paz.push_back(0);
-        
-    }}
-    
-    A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
-    if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-    else {std::sort (A.paz.begin(),A.paz.end());
-if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2];
-else  A.rez=(A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0;}
-    grupe.push_back(A);
-    A.paz.clear();
-    }}
+}
     string vardo_skaitymas(const string &prompt)
 {
     string value;

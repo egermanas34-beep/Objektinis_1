@@ -12,7 +12,7 @@ int main(){
     int veiksmas = skaiciu_mastelis("", 1, 4);
     if(veiksmas==1) inputas(A, grupe, pasirinkimas);
     else if(veiksmas==2) generavimasSk(A, grupe, pasirinkimas);
-    //else if(veiksmas==3) {inputas(A, grupe, pasirinkimas); generavimasSk(A);}
+    else if(veiksmas==3) generavimasVisko(A, grupe, pasirinkimas);
     else if(veiksmas==4) return 0;
     
     outputas(grupe, pasirinkimas);

@@ -69,7 +69,7 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
     
         A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
         if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-        else {std::sort (A.paz.begin(),A.paz.end());
+        else {sort (A.paz.begin(),A.paz.end());
         if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
         else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
         grupe.push_back(A);
@@ -138,10 +138,58 @@ void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         A.egz = rand() % 10 + 1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
         cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
         if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-        else {std::sort (A.paz.begin(),A.paz.end());
+        else {sort (A.paz.begin(),A.paz.end());
         if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
         else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
         grupe.push_back(A);
         A.paz.clear();
     }
 }
+void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
+{
+   mt19937 mt(static_cast<long unsigned int>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
+   uniform_int_distribution<int> dist(0,9);
+   
+   string vardai[10]={"Jonas", "Petras", "Ona", "Maryte", "Antanas", "Ieva", "Tomas", "Rasa", "Dainius", "Asta"};
+   string pavardes_m[10]={"Pavardaite1", "Pavardaite2", "Pavardaite3", "Pavardaite4", "Pavardaite5", "Pavardaite6", "Pavardaite7", "Pavardaite8", "Pavardaite9", "Pavardaite10"};
+   string pavardes_v[10]={"Pavardenis1", "Pavardenis2", "Pavardenis3", "Pavardenis4", "Pavardenis5", "Pavardenis6", "Pavardenis7", "Pavardenis8", "Pavardenis9", "Pavardenis10"};
+    int m = skaiciu_mastelis("Kiek yra studentu? ", 1, 1000);
+    pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
+    for(int i=0;i<m;i++)
+    {
+        A.Vardas=vardai[dist(mt)];
+        switch(*A.Vardas.rbegin())//pasirenkame pavarde pagal vardo gala
+        {
+            
+            case 's': A.Pavarde=pavardes_v[dist(mt)]; break;
+            default: A.Pavarde=pavardes_m[dist(mt)]; break;
+        }
+        cout<<"is viso gali buti ivesta "<<Maxpazymiu<<" pazymiu."<<endl;
+        cout<<"kiek pazymiu norite sugeneruoti? "<<endl;
+        int n = skaiciu_mastelis("", 1, Maxpazymiu);
+        int temp, sum=0;
+        for(int ii=0;ii<n;ii++)
+        {
+            temp = dist(mt)+1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
+            cout<<"Sugeneruotas "<<ii+1<<" pazymys: "<<temp<<endl;
+            A.paz.push_back(temp);
+            sum+=temp;
+        }
+        if(pasirinkimas==1 && n<Maxpazymiu) 
+        {
+            for(int i=0;i<Maxpazymiu-n;i++)
+            {
+            A.paz.push_back(0);
+            }
+        }
+        A.egz = dist(mt)+1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
+        cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
+        if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
+        else {sort (A.paz.begin(),A.paz.end());
+        if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+        else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
+        grupe.push_back(A);
+        A.paz.clear();
+    
+    }
+}    

@@ -22,19 +22,21 @@ using std::mt19937;
 using std::uniform_int_distribution;
 using std::chrono::high_resolution_clock;
 using std::sort;
+const int MaxStudentu = 100;
+const int MaxPazymiu = 20;
 
 struct Studentas {
-  string Vardas="A", Pavarde="B";
-  vector<int> paz;
-  int egz;
-  double rez;
-    
+    string vardas;
+    string pavarde;
+    int paz[MaxPazymiu];
+    int pazKiek;
+    int egz;
+    double rez;
 };
-const int Maxpazymiu=10;
 
-void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
-void outputas(const vector<Studentas> &grupe, int pasirinkimas);
+void inputas(Studentas &A, Studentas grupe[], int &pasirinkimas, int &studentuKiek);
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val);
 string vardo_skaitymas(const string &prompt);
-void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
-void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
+void outputas(const Studentas grupe[], int pasirinkimas, int studentuKiek);
+void generavimasSk(Studentas &A, Studentas grupe[], int &pasirinkimas, int &studentuKiek);
+void generavimasVisko(Studentas &A, Studentas grupe[], int &pasirinkimas, int &studentuKiek);

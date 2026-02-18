@@ -130,7 +130,7 @@ void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         }
         if(pasirinkimas==1 && n<Maxpazymiu) 
         {
-            for(int i=0;i<Maxpazymiu-n;i++)
+            for(int ii=0;ii<Maxpazymiu-n;ii++)
             {
             A.paz.push_back(0);
             }
@@ -147,8 +147,8 @@ void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 }
 void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 {
-   mt19937 mt(static_cast<long unsigned int>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
-   uniform_int_distribution<int> dist(0,9);
+   mt19937 mt(static_cast<long unsigned int>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));// Inicijuojame atsitiktinių skaičių generatorių su dabartiniu laiku 
+   uniform_int_distribution<int> dist(0,9);// Sukuriame tolygų skaičių pasiskirstymą nuo 0 iki 9   
    
    string vardai[10]={"Jonas", "Petras", "Ona", "Maryte", "Antanas", "Ieva", "Tomas", "Rasa", "Dainius", "Asta"};
    string pavardes_m[10]={"Pavardaite1", "Pavardaite2", "Pavardaite3", "Pavardaite4", "Pavardaite5", "Pavardaite6", "Pavardaite7", "Pavardaite8", "Pavardaite9", "Pavardaite10"};

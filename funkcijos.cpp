@@ -1,11 +1,12 @@
 #include "struktura.h"
 void outputas(const vector<Studentas> &grupe, int pasirinkimas)
 {
-    cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis(vid.):"<<left<<setw(40)<<"galutinis(med.):"<<endl;
-    cout<<" ----------------------------------------------"<<endl;
+    /*cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis(vid.):"<<left<<setw(40)<<"galutinis(med.):"<<endl;
+    cout<<" -------------------------------------------------------------------------------------------------------------------"<<endl;
     for(auto A:grupe){ 
     cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.vidurkis<<left<<setw(40)<<A.mediana<<endl;}
-    
+    */
+   cout<<"isveda kolkas"<<endl;
 
     
 }
@@ -32,7 +33,6 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 {
     int m = 1; // Pradinis studentų kiekis, nustatomas į 1, kad įvesties ciklas prasidėtų
     int k = 1; // Pradinis pažymių kiekis, nustatomas į 1, kad įvesties ciklas prasidėtų
-     pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
     while (m!=0)
     {
         A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
@@ -108,7 +108,6 @@ string vardo_skaitymas(const string &prompt)
 void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 {
     int m = skaiciu_mastelis("Kiek yra studentu? ", 1, 1000);
-    pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
     for(int i=0;i<m;i++)
     {
         A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
@@ -144,13 +143,16 @@ void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 {
    mt19937 mt(static_cast<long unsigned int>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));// Inicijuojame atsitiktinių skaičių generatorių su dabartiniu laiku 
+   //static_cast<long unsigned int> naudojamas norint užtikrinti, kad laiko reikšmė būtų tinkamai konvertuota į generatoriaus sėklą
    uniform_int_distribution<int> dist(0,9);// Sukuriame tolygų skaičių pasiskirstymą nuo 0 iki 9   
    
    string vardai[10]={"Jonas", "Petras", "Ona", "Maryte", "Antanas", "Ieva", "Tomas", "Rasa", "Dainius", "Asta"};
    string pavardes_m[10]={"Pavardaite1", "Pavardaite2", "Pavardaite3", "Pavardaite4", "Pavardaite5", "Pavardaite6", "Pavardaite7", "Pavardaite8", "Pavardaite9", "Pavardaite10"};
    string pavardes_v[10]={"Pavardenis1", "Pavardenis2", "Pavardenis3", "Pavardenis4", "Pavardenis5", "Pavardenis6", "Pavardenis7", "Pavardenis8", "Pavardenis9", "Pavardenis10"};
     int m = skaiciu_mastelis("Kiek yra studentu? ", 1, 1000);
-    pasirinkimas = skaiciu_mastelis("galutinio pazymio skaiciavimui bus naudojamas: \n 1 - vidurkis \n 2 - mediana \n Pasirinkite: ", 1, 2);
+    cout<<"is viso gali buti ivesta "<<Maxpazymiu<<" pazymiu."<<endl;
+    cout<<"kiek pazymiu norite sugeneruoti? "<<endl;
+        int n = skaiciu_mastelis("", 1, Maxpazymiu);
     for(int i=0;i<m;i++)
     {
         A.Vardas=vardai[dist(mt)];
@@ -160,9 +162,6 @@ void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
             case 's': A.Pavarde=pavardes_v[dist(mt)]; break;
             default: A.Pavarde=pavardes_m[dist(mt)]; break;
         }
-        cout<<"is viso gali buti ivesta "<<Maxpazymiu<<" pazymiu."<<endl;
-        cout<<"kiek pazymiu norite sugeneruoti? "<<endl;
-        int n = skaiciu_mastelis("", 1, Maxpazymiu);
         int temp, sum=0;
         for(int ii=0;ii<n;ii++)
         {
@@ -171,13 +170,13 @@ void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
             A.paz.push_back(temp);
             sum+=temp;
         }
-        if(pasirinkimas==1 && n<Maxpazymiu) 
+        /*if(pasirinkimas==1 && n<Maxpazymiu) 
         {
             for(int i=0;i<Maxpazymiu-n;i++)
             {
             A.paz.push_back(0);
             }
-        }
+        }*/
         A.egz = dist(mt)+1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
         cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
        A.vidurkis=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  

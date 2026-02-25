@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,6 +9,8 @@
 #include <random>
 #include <chrono>
 #include <stdlib.h>
+#include <fstream>
+#include <sstream>
 using std::string;
 using std::cout;
 using std::cin;
@@ -39,3 +42,4 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val);
 string vardo_skaitymas(const string &prompt);
 void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
 void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
+vector<Studentas> bufer_nusk(const string &read_vardas);

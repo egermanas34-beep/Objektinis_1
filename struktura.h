@@ -27,7 +27,8 @@ struct Studentas {
   string Vardas="A", Pavarde="B";
   vector<int> paz;
   int egz;
-  double rez;
+  double vidurkis;
+  double mediana;
     
 };
 const int Maxpazymiu=10;

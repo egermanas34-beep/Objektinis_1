@@ -1,18 +1,12 @@
 #include "struktura.h"
 void outputas(const vector<Studentas> &grupe, int pasirinkimas)
-{if(pasirinkimas==1) { // Jei pasirinktas vidurkis
-    cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis(vid.):"<<endl;
+{
+    cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis(vid.):"<<left<<setw(40)<<"galutinis(med.):"<<endl;
     cout<<" ----------------------------------------------"<<endl;
     for(auto A:grupe){ 
-    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.rez<<endl;}}
+    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.vidurkis<<left<<setw(40)<<A.mediana<<endl;}
     
-else { cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis(med.):"<<endl;
-    cout<<" ----------------------------------------------"<<endl;
-    for(auto A:grupe){ // Jei pasirinkta mediana
-    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.rez<<endl;}
-    //for(auto a:A.paz){cout<<setw(3)<<a;}
 
-    }
     
 }
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
@@ -69,10 +63,11 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         }
     
         A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
-        if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-        else {sort (A.paz.begin(),A.paz.end());
-        if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
-        else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
+        
+        A.vidurkis = sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;
+       sort (A.paz.begin(),A.paz.end());
+        if(A.paz.size()%2==1) A.mediana= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+        else  A.mediana=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
         grupe.push_back(A);// Pridedame studentą į grupę
         A.paz.clear();// Išvalome pažymių vektorių, kad jis būtų tuščias prieš kitą studento įvedimą
         cout<<"Jei norite ivesti dar viena studenta, iveskite 1, jei ne - 0: ";
@@ -138,10 +133,10 @@ void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         }
         A.egz = rand() % 10 + 1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
         cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
-        if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-        else {sort (A.paz.begin(),A.paz.end());
-        if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
-        else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
+       A.vidurkis=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
+        sort (A.paz.begin(),A.paz.end());
+        if(A.paz.size()%2==1) A.mediana= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+        else  A.mediana=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
         grupe.push_back(A);
         A.paz.clear();
     }
@@ -185,10 +180,10 @@ void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         }
         A.egz = dist(mt)+1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
         cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
-        if(pasirinkimas==1) A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-        else {sort (A.paz.begin(),A.paz.end());
-        if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
-        else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;}
+       A.vidurkis=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
+        sort (A.paz.begin(),A.paz.end());
+        if(A.paz.size()%2==1) A.mediana= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+        else  A.mediana=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
         grupe.push_back(A);
         A.paz.clear();
     

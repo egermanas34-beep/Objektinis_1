@@ -1,6 +1,6 @@
 #include "struktura.h"
 
-vector<Studentas> bufer_nusk(const string &read_vardas)
+vector<Studentas> bufer_nusk(const string &read_vardas, int &pasirinkimas)
 {
     vector<Studentas> grupe;// Sukuriame tuščią studentų grupės vektorių
     std::ifstream open_f(read_vardas);// Atidarome failą skaitymui
@@ -52,13 +52,24 @@ vector<Studentas> bufer_nusk(const string &read_vardas)
         {
             suma += x;
         }
-        A.vidurkis = suma * 1.0 / (A.paz.size() * 1.0) * 0.4 + A.egz * 0.6;
+        if(pasirinkimas == 1) 
+            A.rez = suma * 1.0 / (A.paz.size() * 1.0) * 0.4 + A.egz * 0.6; // Apskaičiuojame galutinį rezultatą pagal vidurkį
+        else
+        {
+            sort(A.paz.begin(), A.paz.end()); // Rikiuojame pažymius, kad galėtume rasti medianą
+            if (A.paz.size() % 2 == 1) {
+                A.rez = A.paz[A.paz.size() / 2] * 0.4 + A.egz * 0.6; // Jei pažymių skaičius yra nelyginis, mediana yra vidurinis elementas
+            } else {
+                A.rez = ((A.paz[A.paz.size() / 2 - 1] + A.paz[A.paz.size() / 2]) / 2.0) * 0.4 + A.egz * 0.6; // Jei pažymių skaičius yra lyginis, mediana yra dviejų vidurinių elementų vidurkis
+            }
+        }
+        A.rez = suma * 1.0 / (A.paz.size() * 1.0) * 0.4 + A.egz * 0.6;
 
         sort(A.paz.begin(), A.paz.end());
         if (A.paz.size() % 2 == 1) {
-            A.mediana = A.paz[A.paz.size() / 2] * 0.4 + A.egz * 0.6;
+            A.rez = A.paz[A.paz.size() / 2] * 0.4 + A.egz * 0.6;
         } else {
-            A.mediana = ((A.paz[A.paz.size() / 2 - 1] + A.paz[A.paz.size() / 2]) / 2.0) * 0.4 + A.egz * 0.6;
+            A.rez = ((A.paz[A.paz.size() / 2 - 1] + A.paz[A.paz.size() / 2]) / 2.0) * 0.4 + A.egz * 0.6;
         }
 
         grupe.push_back(A);
@@ -68,4 +79,23 @@ vector<Studentas> bufer_nusk(const string &read_vardas)
     //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
     cout << "Failo nuskaitymas ir apdorojimas uztruko: " << diff.count() << " sekundziu." << endl;
     return grupe;
+}
+
+void rikiavimas(vector<Studentas> &grupe, int &rik)
+{
+    if (rik == 1) {
+        sort(grupe.begin(), grupe.end(), [](const Studentas &a, const Studentas &b) //Lambda funkcija, kuri nurodo, kaip rikiuoti studentus pagal vardą
+        {
+            return a.Vardas > b.Vardas; // Rikiuojame pagal vardą maŽėjimo tvarka
+        });
+    } else if (rik == 2) {
+        sort(grupe.begin(), grupe.end(), [](const Studentas &a, const Studentas &b) {
+            return a.Pavarde > b.Pavarde; // Rikiuojame pagal pavardę maŽėjimo tvarka
+        });
+    } else if (rik == 3) {
+        sort(grupe.begin(), grupe.end(), [](const Studentas &a, const Studentas &b) 
+        {
+            return a.rez > b.rez; // Rikiuojame pagal rezultatą mažėjimo tvarka
+        });
+    }
 }

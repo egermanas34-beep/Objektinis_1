@@ -32,14 +32,20 @@ struct Studentas {
   int egz;
   double vidurkis;
   double mediana;
-    
+  double rez;
 };
 const int Maxpazymiu=10;
 
+//const string failo_vardas = "kursiokai.txt";
+//const string failo_vardas = "studentai10000.txt";
+//const string failo_vardas = "studentai100000.txt";
+const string failo_vardas = "studentai1000000.txt";
+
 void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
-void outputas(const vector<Studentas> &grupe, int pasirinkimas);
+void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas);
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val);
 string vardo_skaitymas(const string &prompt);
 void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
 void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
-vector<Studentas> bufer_nusk(const string &read_vardas);
+vector<Studentas> bufer_nusk(const string &read_vardas, int &pasirinkimas);
+void rikiavimas(vector<Studentas> &grupe, int &pasirinkimas);

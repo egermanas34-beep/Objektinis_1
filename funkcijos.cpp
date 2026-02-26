@@ -1,13 +1,57 @@
 #include "struktura.h"
-void outputas(const vector<Studentas> &grupe, int pasirinkimas)
+void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas)
 {
-    /*cout<<left<<setw(10)<<"Vardas:"<<left<<setw(20)<<"Pavarde:"<<left<<setw(30)<<"Galutinis(vid.):"<<left<<setw(40)<<"galutinis(med.):"<<endl;
-    cout<<" -------------------------------------------------------------------------------------------------------------------"<<endl;
-    for(auto A:grupe){ 
-    cout<<left<<setw(10)<<A.Vardas<<left<<setw(20)<<A.Pavarde<<left<<setw(30)<<fixed<<setprecision(2)<<A.vidurkis<<left<<setw(40)<<A.mediana<<endl;}
-    */
-   cout<<"isveda kolkas"<<endl;
+    
+    auto start = std::chrono::high_resolution_clock::now();// Pradedame matuoti laiką
+    /* std::chrono::high_resolution_clock::now() funkcija grąžina dabartinį laiką, 
+    kuris bus naudojamas vėliau apskaičiuoti, kiek laiko užtruko failo nuskaitymas ir apdorojimas*/
+    auto spausdinti_i_srauta = [&](std::ostream &out)// Lambda funkcija, kuri spausdina rezultatus į nurodytą srautą (ekraną arba failą)
+    {
+        if(pasirinkimas==1) 
+        {
+            out << left << setw(15) << "Vardas:" << left << setw(30) << "Pavarde:" << left << setw(45) << "Galutinis(vid.):" << '\n';
+            out << " -------------------------------------------------------------------------------------------------------------------" << '\n';
+            out << fixed << setprecision(2);
+            for (const auto &A : grupe)
+            {
+                out << left << setw(15) << A.Vardas << left << setw(30) << A.Pavarde << left << setw(45) << A.rez << '\n';
+            }
+        }
+        else
+        {
+            out << left << setw(15) << "Vardas:" << left << setw(30) << "Pavarde:" << left << setw(45) << "Galutinis(med.):" << '\n';
+            out << " -------------------------------------------------------------------------------------------------------------------" << '\n';
+            out << fixed << setprecision(2);
+            for (const auto &A : grupe)
+            {
+                out << left << setw(15) << A.Vardas << left << setw(30) << A.Pavarde << left << setw(45) << A.rez << '\n';
+            }
+        }
+    };
 
+    if(isvedimas==2)
+    {
+        std::ofstream out_f("rezultatai.txt");
+        if (!out_f.is_open())
+        {
+            cout << "Nepavyko atidaryti failo rezultatai.txt" << endl;
+            return;
+        }
+        spausdinti_i_srauta(out_f);
+        
+       cout<<"Rezultatai issaugoti faile rezultatai.txt"<<endl;
+       std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
+    //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
+    cout << "duomenu isvedimas uztruko: " << diff.count() << " sekundziu." << endl;
+       return;
+    }
+   
+
+    
+    spausdinti_i_srauta(cout);
+     std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
+    //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
+    cout << "duomenu isvedimas uztruko: " << diff.count() << " sekundziu." << endl;
     
 }
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
@@ -63,11 +107,14 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         }
     
         A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
-        
-        A.vidurkis = sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;
-       sort (A.paz.begin(),A.paz.end());
-        if(A.paz.size()%2==1) A.mediana= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
-        else  A.mediana=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
+        if(pasirinkimas == 1)
+            A.rez = sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;
+        else
+        {
+            sort (A.paz.begin(),A.paz.end());
+            if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+            else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
+        }
         grupe.push_back(A);// Pridedame studentą į grupę
         A.paz.clear();// Išvalome pažymių vektorių, kad jis būtų tuščias prieš kitą studento įvedimą
         cout<<"Jei norite ivesti dar viena studenta, iveskite 1, jei ne - 0: ";
@@ -130,12 +177,17 @@ void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
             A.paz.push_back(0);
             }
         }
+
         A.egz = rand() % 10 + 1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
         cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
-       A.vidurkis=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-        sort (A.paz.begin(),A.paz.end());
-        if(A.paz.size()%2==1) A.mediana= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
-        else  A.mediana=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
+        if(pasirinkimas == 1)
+            A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
+        else
+        {
+            sort (A.paz.begin(),A.paz.end());
+            if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+            else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
+        }
         grupe.push_back(A);
         A.paz.clear();
     }
@@ -179,10 +231,14 @@ void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         }*/
         A.egz = dist(mt)+1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
         cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
-       A.vidurkis=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
-        sort (A.paz.begin(),A.paz.end());
-        if(A.paz.size()%2==1) A.mediana= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
-        else  A.mediana=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
+        if(pasirinkimas == 1)
+            A.rez=sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;  
+        else
+        {
+            sort (A.paz.begin(),A.paz.end());
+            if(A.paz.size()%2==1) A.rez= A.paz[A.paz.size()/2]*0.4+A.egz*0.6;
+            else  A.rez=((A.paz[A.paz.size()/2-1]+A.paz[A.paz.size()/2])/2.0)*0.4+A.egz*0.6;
+        }
         grupe.push_back(A);
         A.paz.clear();
     

@@ -222,13 +222,7 @@ void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
             A.paz.push_back(temp);
             sum+=temp;
         }
-        /*if(pasirinkimas==1 && n<Maxpazymiu) 
-        {
-            for(int i=0;i<Maxpazymiu-n;i++)
-            {
-            A.paz.push_back(0);
-            }
-        }*/
+        
         A.egz = dist(mt)+1; // Generuoja atsitiktinius skaičius nuo 1 iki 10
         cout<<"Sugeneruotas egzamino pazymys: "<<A.egz<<endl;
         if(pasirinkimas == 1)

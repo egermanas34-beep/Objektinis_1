@@ -43,6 +43,7 @@ void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas)
        std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
     //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
     cout << "duomenu isvedimas uztruko: " << diff.count() << " sekundziu." << endl;
+    out_f.close();
        return;
     }
    

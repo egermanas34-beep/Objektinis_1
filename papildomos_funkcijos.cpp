@@ -1,6 +1,7 @@
 #include "papildomos.h"
 #include "generavimas.h"
-
+#include <limits>
+#include <stdexcept>
 void rikiavimas(vector<Studentas> &grupe, int &rik)
 {
     if (rik == 1) {
@@ -27,50 +28,86 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
 {
     int value;
     while (true) {
-        cout << prompt;
-        cin >> value;
-        if (cin.fail()) {// Tikriname, ar įvyko įvesties klaida
-            cin.clear();// Išvalome klaidos būseną
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignoruojame likusius įvesties simbolius
-            cout << "Neteisinga ivestis. Iveskite skaiciu.\n";
-            continue;       
+        try 
+        {
+            cout<<prompt;
+            cin >> value;
+            if(cin.fail())
+            {
+                throw std::runtime_error("Įvestas ne skaičius");
+            }
+            if (value < min_val || value > max_val) {
+                throw std::out_of_range("Įvestas skaičius už intervalo ribų");
+
+            }
+            return value;
         }
-        if (value < min_val || value > max_val) { // Tikriname, ar įvestas skaičius yra nurodytame intervale
-            cout << "Neteisinga ivestis. Turi buti nuo " << min_val << " iki " << max_val << ".\n";
-            continue;
+        
+        catch(const std::runtime_error& e)
+        {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout<<"Klaida: "<<e.what()<<". Bandykite dar karta.\n";
+                
         }
-        return value;
+        catch(const std::out_of_range& e)
+        {
+            cout<<"Klaida: "<<e.what()<<". Turi būti nuo "<<min_val<<" iki "<<max_val<<".\n";
+                
+        }
+   
     }
+    
 }
 
 string vardo_skaitymas(const string &prompt)
 {
     string value;
     while (true) {
-        cout << prompt;
-        cin >> value;
-        if (cin.fail()) { // Tikriname, ar įvyko įvesties klaida
-            cin.clear(); // Išvalome klaidos būseną
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignoruojame likusius įvesties simbolius
-            cout << "Neteisinga ivestis. Iveskite raides arba raides su skaiciais.\n";
-            continue;
-        }
-        bool has_alpha = false;// Patikriname, ar yra bent viena raidė
-        bool all_alnum = true;// Patikriname, ar visi simboliai yra raidės arba skaičiai
-        for (unsigned char ch : value) {
-            if (std::isalpha(ch)) {// Jei yra bent viena raidė, nustatome has_alpha į true
-                has_alpha = true;
-                continue;
+        try 
+        {
+            cout<<prompt;
+            cin>>value;
+            if(cin.fail())
+            {
+                throw std::runtime_error("Įvesties klaida");
+
             }
-            if (!std::isdigit(ch)) {// Jei simbolis nėra nei raidė, nei skaičius, nustatome all_alnum į false ir išeiname iš ciklo
-                all_alnum = false;
-                break;
+
+            bool has_alpha = false;
+            bool all_alnum = true;
+
+            for(unsigned char ch : value)
+            {
+                if(std::isalpha(ch))
+                {
+                    has_alpha = true;
+                }
+                else if(!std::isalnum(ch))
+                {
+                    all_alnum = false;
+                    break;
+                }
             }
+            if(!all_alnum ||!has_alpha)
+            {
+                throw std::invalid_argument("Turi būti bent viena raidė ir tik raidės bei skaičiai");    
+
+            }
+            return value;
         }
-        if (!all_alnum || !has_alpha) {// Jei įvestis neteisinga, informuojame vartotoją ir prašome įvesti dar kartą
-            cout << "Neteisinga ivestis. Iveskite raides arba raides su skaiciais.\n";
-            continue;
-        }
-        return value;
+            catch(const std::runtime_error& e)
+            {
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cout<<"Klaida: "<<e.what()<<". Bandykite dar karta.\n";
+                    
+            }
+            catch(const std::invalid_argument& e)
+            {
+                cout<<"Klaida: "<<e.what()<<". Bandykite dar karta.\n";
+                    
+            }
+        
     }
 }

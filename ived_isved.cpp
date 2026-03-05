@@ -3,86 +3,96 @@
 #include "papildomos.h"
 #include "Iv_Isv.h"
 
-vector<Studentas> bufer_nusk(const string &read_vardas, int &pasirinkimas)
+vector<Studentas> bufer_nusk(int &pasirinkimas)
 {
     vector<Studentas> grupe;// Sukuriame tuščią studentų grupės vektorių
-    std::ifstream open_f(read_vardas);// Atidarome failą skaitymui
-    if (!open_f.is_open())
+    while(true)
     {
-        cout << "Nepavyko atidaryti failo: " << read_vardas << endl;
-        return grupe;
-    }
-
-    auto start = std::chrono::high_resolution_clock::now();// Pradedame matuoti laiką
-    /* std::chrono::high_resolution_clock::now() funkcija grąžina dabartinį laiką, 
-    kuris bus naudojamas vėliau apskaičiuoti, kiek laiko užtruko failo nuskaitymas ir apdorojimas*/
-    string eil;// Sukuriame eilutės kintamąjį, kuris bus naudojamas skaityti kiekvieną eilutę iš failo
-    std::getline(open_f, eil);// Skaitome pirmąją eilutę, kuri yra antraštė, ir ją ignoruojame
-
-    while (std::getline(open_f, eil)) // Skaitome kiekvieną likusią eilutę iš failo, kol pasiekiame failo pabaigą
+    try
     {
-        if (eil.empty()) // Tikriname, ar eilutė yra tuščia, ir jei taip, praleidžiame ją
+        string read_vardas;
+        cout << "Iveskite failo pavadinimą iš sarašo (pvz. studentai10000.txt): ";
+        cin >> read_vardas;
+        std::ifstream open_f(read_vardas);// Atidarome failą skaitymui
+        if (!open_f.is_open())
         {
-            continue;
+            throw std::runtime_error("Nepavyko atidaryti failo " + read_vardas);//jeigu failas nebuvo atidarytas, ismeta klaida
+        
         }
+        auto start = std::chrono::high_resolution_clock::now();// Pradedame matuoti laiką
+        /* std::chrono::high_resolution_clock::now() funkcija grąžina dabartinį laiką, 
+        kuris bus naudojamas vėliau apskaičiuoti, kiek laiko užtruko failo nuskaitymas ir apdorojimas*/
+        string eil;// Sukuriame eilutės kintamąjį, kuris bus naudojamas skaityti kiekvieną eilutę iš failo
+        std::getline(open_f, eil);// Skaitome pirmąją eilutę, kuri yra antraštė, ir ją ignoruojame
 
-        std::stringstream ss(eil);// Sukuriame stringstream objektą, kuris leis mums lengvai išskaidyti eilutę į atskirus žodžius ir skaičius
-        Studentas A;
-        ss >> A.Vardas >> A.Pavarde;// Skaitome pirmus du žodžius kaip studento vardą ir pavardę
-        if (A.Vardas.empty() || A.Pavarde.empty()) 
+        while (std::getline(open_f, eil)) // Skaitome kiekvieną likusią eilutę iš failo, kol pasiekiame failo pabaigą
         {
-            continue;
-        }
-
-        vector<int> visi_pazymiai;// Sukuriame vektorių, kuris saugos visus pažymius, įskaitant egzaminą
-        int pazymys;
-        while (ss >> pazymys) 
-        {
-            visi_pazymiai.push_back(pazymys);// Skaitome visus likusius skaičius kaip pažymius ir pridedame juos į vektorių
-        }
-
-        if (visi_pazymiai.size() < 2) // Tikriname, ar yra pakankamai pažymių (bent vienas pažymys ir egzaminas), ir jei ne, praleidžiame šį įrašą
-        {
-            continue;
-        }
-
-        A.egz = visi_pazymiai.back(); // Paskutinis pažymys yra egzaminas, todėl jį išskiriame ir priskiriame studento egzaminui
-        visi_pazymiai.pop_back(); // Pašaliname egzaminą iš pažymių vektoriaus, kad liktų tik semestro pažymiai
-        A.paz = visi_pazymiai; // Priskiriame likusius pažymius studento pažymių vektoriui
-
-        int suma = 0;
-        for (int x : A.paz) //x yra kiekvienas pažymys studento pažymių vektoriuje, ir mes juos sumuojame, kad galėtume apskaičiuoti vidurkį
-        {
-            suma += x;
-        }
-        if(pasirinkimas == 1) 
-            A.rez = suma * 1.0 / (A.paz.size() * 1.0) * 0.4 + A.egz * 0.6; // Apskaičiuojame galutinį rezultatą pagal vidurkį
-        else
-        {
-            sort(A.paz.begin(), A.paz.end()); // Rikiuojame pažymius, kad galėtume rasti medianą
-            if (A.paz.size() % 2 == 1) {
-                A.rez = A.paz[A.paz.size() / 2] * 0.4 + A.egz * 0.6; // Jei pažymių skaičius yra nelyginis, mediana yra vidurinis elementas
-            } else {
-                A.rez = ((A.paz[A.paz.size() / 2 - 1] + A.paz[A.paz.size() / 2]) / 2.0) * 0.4 + A.egz * 0.6; // Jei pažymių skaičius yra lyginis, mediana yra dviejų vidurinių elementų vidurkis
+            if (eil.empty()) // Tikriname, ar eilutė yra tuščia, ir jei taip, praleidžiame ją
+            {
+                continue;
             }
-        }
-        A.rez = suma * 1.0 / (A.paz.size() * 1.0) * 0.4 + A.egz * 0.6;
 
-        sort(A.paz.begin(), A.paz.end());
-        if (A.paz.size() % 2 == 1) {
-            A.rez = A.paz[A.paz.size() / 2] * 0.4 + A.egz * 0.6;
-        } else {
-            A.rez = ((A.paz[A.paz.size() / 2 - 1] + A.paz[A.paz.size() / 2]) / 2.0) * 0.4 + A.egz * 0.6;
+            std::stringstream ss(eil);// Sukuriame stringstream objektą, kuris leis mums lengvai išskaidyti eilutę į atskirus žodžius ir skaičius
+            Studentas A;
+            ss >> A.Vardas >> A.Pavarde;// Skaitome pirmus du žodžius kaip studento vardą ir pavardę
+            if (A.Vardas.empty() || A.Pavarde.empty()) 
+            {
+                continue;
+            }
+
+            vector<int> visi_pazymiai;// Sukuriame vektorių, kuris saugos visus pažymius, įskaitant egzaminą
+            int pazymys;
+            while (ss >> pazymys) 
+            {
+                visi_pazymiai.push_back(pazymys);// Skaitome visus likusius skaičius kaip pažymius ir pridedame juos į vektorių
+            }
+
+            if (visi_pazymiai.size() < 2) // Tikriname, ar yra pakankamai pažymių (bent vienas pažymys ir egzaminas), ir jei ne, praleidžiame šį įrašą
+            {
+                continue;
+            }
+
+            A.egz = visi_pazymiai.back(); // Paskutinis pažymys yra egzaminas, todėl jį išskiriame ir priskiriame studento egzaminui
+            visi_pazymiai.pop_back(); // Pašaliname egzaminą iš pažymių vektoriaus, kad liktų tik semestro pažymiai
+            A.paz = visi_pazymiai; // Priskiriame likusius pažymius studento pažymių vektoriui
+
+            int suma = 0;
+            for (int x : A.paz) //x yra kiekvienas pažymys studento pažymių vektoriuje, ir mes juos sumuojame, kad galėtume apskaičiuoti vidurkį
+            {
+                suma += x;
+            }
+        
+            if(pasirinkimas == 1) 
+            A.rez = suma * 1.0 / (A.paz.size() * 1.0) * 0.4 + A.egz * 0.6; // Apskaičiuojame galutinį rezultatą pagal vidurkį
+            else
+            {
+                sort(A.paz.begin(), A.paz.end()); // Rikiuojame pažymius, kad galėtume rasti medianą
+                if (A.paz.size() % 2 == 1) 
+                {
+                    A.rez = A.paz[A.paz.size() / 2] * 0.4 + A.egz * 0.6; // Jei pažymių skaičius yra nelyginis, mediana yra vidurinis elementas
+                } 
+                else 
+                {
+                    A.rez = ((A.paz[A.paz.size() / 2 - 1] + A.paz[A.paz.size() / 2]) / 2.0) * 0.4 + A.egz * 0.6; // Jei pažymių skaičius yra lyginis, mediana yra dviejų vidurinių elementų vidurkis
+                }
+            }
+        
+            A.paz.clear(); // Išvalome pažymių vektorių, kad jis būtų tuščias prieš kitą studento įvedimą
+            grupe.push_back(A);
         }
-        A.paz.clear(); // Išvalome pažymių vektorių, kad jis būtų tuščias prieš kitą studento įvedimą
-        grupe.push_back(A);
+
+        std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
+        //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
+        cout << "Failo nuskaitymas ir apdorojimas uztruko: " << diff.count() << " sekundziu." << endl;
+        open_f.close();
+        return grupe;
+    }   
+    catch(const std::runtime_error& e)
+    {
+        cout<<"Klaida: "<<e.what()<<". Patikrinkite ar failas egzistuoja ir bandykite dar kartą. \n";
+       
     }
-
-    std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
-    //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
-    cout << "Failo nuskaitymas ir apdorojimas uztruko: " << diff.count() << " sekundziu." << endl;
-    open_f.close();
-    return grupe;
+}
 }
 void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
 {
@@ -90,20 +100,20 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
     int k = 1; // Pradinis pažymių kiekis, nustatomas į 1, kad įvesties ciklas prasidėtų
     while (m!=0)
     {
-        A.Vardas = vardo_skaitymas("Iveskite studento varda: ");
-        A.Pavarde = vardo_skaitymas("Iveskite studento pavarde: ");
-        cout<<"is viso gali buti ivesta "<<Maxpazymiu<<" pazymiu."<<endl;
-        cout<<"Iveskite semestro pazymius : \n";
+        A.Vardas = vardo_skaitymas("Įveskite studento vardą: ");
+        A.Pavarde = vardo_skaitymas("Įveskite studento pavardę: ");
+        cout<<"Iš viso gali būti įvesta "<<Maxpazymiu<<" pažymių."<<endl;
+        cout<<"Įveskite semestro pažymius : \n";
         int n = 1;
         int temp, sum=0;
         while (k!=0 && n<=Maxpazymiu)
         {
             
-            temp = skaiciu_mastelis("Iveskite " + std::to_string(n) + " pazymi : ", 1, 10);
+            temp = skaiciu_mastelis("Įveskite " + std::to_string(n) + " pažymį : ", 1, 10);
             A.paz.push_back(temp);
             sum+=temp;
            
-            cout<<"Jei norite ivesti dar viena pazymi, iveskite 1, jei ne - 0: ";
+            cout<<"Jei norite įvesti dar viena pažymį, įveskite 1, jei ne - 0: ";
         
             k=skaiciu_mastelis("", 0, 1);
             
@@ -117,7 +127,7 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
             }
         }
     
-        A.egz = skaiciu_mastelis("Iveskite egzamino pazymi: ", 1, 10);
+        A.egz = skaiciu_mastelis("Įveskite egzamino pažymį: ", 1, 10);
         if(pasirinkimas == 1)
             A.rez = sum*1.0/(A.paz.size()*1.0)*0.4+A.egz*0.6;
         else
@@ -142,7 +152,7 @@ void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas)
     {
         if(pasirinkimas==1) 
         {
-            out << left << setw(15) << "Vardas:" << left << setw(30) << "Pavarde:" << left << setw(45) << "Galutinis(vid.):" << '\n';
+            out << left << setw(15) << "Vardas:" << left << setw(30) << "Pavardė:" << left << setw(45) << "Galutinis(vid.):" << '\n';
             out << " -------------------------------------------------------------------------------------------------------------------" << '\n';
             out << fixed << setprecision(2);
             for (const auto &A : grupe)
@@ -155,7 +165,7 @@ void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas)
         ///auto - leidžia kompiliatoriui automatiškai nustatyti lambda funkcijos grąžinimo tipą, kuris šiuo atveju yra void, nes funkcija nieko negrąžina.
         else
         {
-            out << left << setw(15) << "Vardas:" << left << setw(30) << "Pavarde:" << left << setw(45) << "Galutinis(med.):" << '\n';
+            out << left << setw(15) << "Vardas:" << left << setw(30) << "Pavardė:" << left << setw(45) << "Galutinis(med.):" << '\n';
             out << " -------------------------------------------------------------------------------------------------------------------" << '\n';
             out << fixed << setprecision(2);
             for (const auto &A : grupe)
@@ -175,10 +185,10 @@ void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas)
         }
         spausdinti_i_srauta(out_f);
         
-       cout<<"Rezultatai issaugoti faile rezultatai.txt"<<endl;
+       cout<<"Rezultatai išsaugoti faile rezultatai.txt"<<endl;
        std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
     //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
-    cout << "duomenu isvedimas uztruko: " << diff.count() << " sekundziu." << endl;
+    cout << "Duomenų išvedimas užtruko: " << diff.count() << " sekundžių." << endl;
     out_f.close();
        return;
     }
@@ -188,6 +198,6 @@ void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas)
     spausdinti_i_srauta(cout);
      std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
     //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
-    cout << "duomenu isvedimas uztruko: " << diff.count() << " sekundziu." << endl;
+    cout << "Duomenų išvedimas užtruko: " << diff.count() << " sekundžių." << endl;
     
 }

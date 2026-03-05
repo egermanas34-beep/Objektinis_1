@@ -111,3 +111,38 @@ string vardo_skaitymas(const string &prompt)
         
     }
 }
+double skaiciu_skaitymas(const string &prompt, double min_val, double max_val)
+{
+    double value;
+    while (true) {
+        try 
+        {
+            cout<<prompt;
+            cin >> value;
+            if(cin.fail())
+            {
+                throw std::runtime_error("Įvestas ne skaičius");
+            }
+            if (value < min_val || value > max_val) {
+                throw std::out_of_range("Įvestas skaičius už intervalo ribų");
+
+            }
+            return value;
+        }
+        
+        catch(const std::runtime_error& e)
+        {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout<<"Klaida: "<<e.what()<<". Bandykite dar karta.\n";
+                
+        }
+        catch(const std::out_of_range& e)
+        {
+            cout<<"Klaida: "<<e.what()<<". Turi būti nuo "<<min_val<<" iki "<<max_val<<".\n";
+                
+        }
+   
+    }
+    
+}

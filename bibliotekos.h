@@ -13,6 +13,8 @@
 #include <sstream>
 #include <cstdlib>
 #include <cstdio>
+#include <limits>
+#include <stdexcept>
 using std::string;
 using std::cout;
 using std::cin;

@@ -20,9 +20,11 @@ system("powershell ls studentai*.txt");
     vector<Studentas> grupe;
     int pasirinkimas;
     int isvedimas;
-    cout<<"Ką jūs norite padaryti? \n 1 - rankiniu būdu įvesti studentus \n 2 - generuoti tik pažymius \n 3 - generuoti vardus su pažymiais \n 4 - nuskaityti iš failo \n 5 -baigti darbą  \n Pasirinkite: ";
-    int veiksmas = skaiciu_mastelis("", 1, 5);
+    cout<<"Ką jūs norite padaryti? \n 1 - rankiniu būdu įvesti studentus \n 2 - generuoti tik pažymius \n 3 - generuoti vardus su pažymiais \n 4 - nuskaityti iš failo \n 5 -baigti darbą \n 6 -generuoti failą \n Pasirinkite: ";
+    int veiksmas = skaiciu_mastelis("", 1, 6);
     if(veiksmas==5) return 0;
+    if(veiksmas==6)
+   {failuGeneravimas(pasirinkimas); return 0;}
     cout<<"Kaip norite apskaičiuoti galutinį balą? \n 1 - pagal vidurkį \n 2 - pagal medianą \n Pasirinkite: ";
     pasirinkimas = skaiciu_mastelis("", 1, 2);  
     cout<<"Kaip norite rikiuoti rezultatus? \n 1 - pagal vardą \n 2 - pagal pavardę \n 3 - pagal galutinį balą \n Pasirinkite: ";
@@ -37,6 +39,8 @@ system("powershell ls studentai*.txt");
         grupe = bufer_nusk( pasirinkimas);
     }
    
+
+
     
     rikiavimas(grupe, rik);
    outputas(grupe, pasirinkimas, isvedimas);

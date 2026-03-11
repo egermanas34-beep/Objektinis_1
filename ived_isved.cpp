@@ -6,7 +6,7 @@
 vector<Studentas> bufer_nusk(int &pasirinkimas)
 {
     vector<Studentas> grupe;// Sukuriame tuščią studentų grupės vektorių
-    while(true)
+   while(true)
     {
     try
     {

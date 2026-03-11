@@ -10,4 +10,4 @@ struct Studentas {
   double rez;
 };
 
-const int Maxpazymiu=10;
+const int Maxpazymiu=20;

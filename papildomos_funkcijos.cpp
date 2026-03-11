@@ -1,7 +1,6 @@
 #include "papildomos.h"
 #include "generavimas.h"
-#include <limits>
-#include <stdexcept>
+
 void rikiavimas(vector<Studentas> &grupe, int &rik)
 {
     if (rik == 1) {
@@ -74,16 +73,16 @@ string vardo_skaitymas(const string &prompt)
 
             }
 
-            bool has_alpha = false;
-            bool all_alnum = true;
+            bool has_alpha = false; // Kintamasis, kuris nurodo, ar įvestyje yra bent viena raidė
+            bool all_alnum = true; // Kintamasis, kuris nurodo, ar visi įvesties simboliai yra raidės arba skaičiai
 
-            for(unsigned char ch : value)
+            for(unsigned char ch : value) 
             {
-                if(std::isalpha(ch))
+                if(std::isalpha(ch)) // std::isalpha funkcija tikrina, ar simbolis yra raidė
                 {
                     has_alpha = true;
                 }
-                else if(!std::isalnum(ch))
+                else if(!std::isalnum(ch)) // std::isalnum funkcija tikrina, ar simbolis yra raidė arba skaičius  
                 {
                     all_alnum = false;
                     break;
@@ -99,7 +98,7 @@ string vardo_skaitymas(const string &prompt)
             catch(const std::runtime_error& e)
             {
                 cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //std::numeric_limits<std::streamsize>::max() - tai funkcija, kuri grąžina didžiausią galimą streamsize reikšmę, kuri yra naudojama kaip argumentas ignore funkcijai, kad būtų ignoruojami visi likę simboliai įvesties sraute iki naujos eilutės simbolio ('\n').
                 cout<<"Klaida: "<<e.what()<<". Bandykite dar karta.\n";
                     
             }

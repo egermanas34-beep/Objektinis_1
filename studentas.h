@@ -8,6 +8,7 @@ struct Studentas {
   double vidurkis;
   double mediana;
   double rez;
+  string lygis;
 };
 
 const int Maxpazymiu=20;

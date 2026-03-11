@@ -3,7 +3,7 @@
 #include "papildomos.h"
 #include "Iv_Isv.h"
 
-vector<Studentas> bufer_nusk(int &pasirinkimas, int &m)
+vector<Studentas> bufer_nusk(string &read_vardas,int &pasirinkimas, int &m)
 {
     vector<Studentas> grupe;// Sukuriame tuščią studentų grupės vektorių
    while(true)
@@ -11,9 +11,6 @@ vector<Studentas> bufer_nusk(int &pasirinkimas, int &m)
     try
     { m=0;
         
-        string read_vardas;
-        cout << "Iveskite failo pavadinimą iš sarašo (pvz. studentai10000.txt): ";
-        cin >> read_vardas;
         std::ifstream open_f(read_vardas);// Atidarome failą skaitymui
         if (!open_f.is_open())
         {

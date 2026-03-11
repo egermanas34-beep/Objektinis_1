@@ -1,5 +1,6 @@
 
 #include "headeriai.h"
+#include "tyrimai.h"
 #include <windows.h>// Įtraukiame Windows.h biblioteką, kad galėtume naudoti funkcijas, susijusias su konsolės kodavimo nustatymais
 
 
@@ -23,11 +24,14 @@ system("powershell ls studentai*.txt");
     int pasirinkimas;
     int isvedimas;
     int m;
+    //tyrimasFailoKurimas();
+    tyrimasVisasProcesas();
     cout<<"Ką jūs norite padaryti? \n 1 - rankiniu būdu įvesti studentus \n 2 - generuoti tik pažymius \n 3 - generuoti vardus su pažymiais \n 4 - nuskaityti iš failo \n 5 -baigti darbą \n 6 -generuoti failą \n Pasirinkite: ";
     int veiksmas = skaiciu_mastelis("", 1, 6);
     if(veiksmas==5) return 0;
     if(veiksmas==6)
-   {failuGeneravimas(pasirinkimas); return 0;}
+   {int n =skaiciu_mastelis("Kiek yra studentų? ", 1, 10000000);
+    failuGeneravimas( n); return 0;}
     cout<<"Kaip norite apskaičiuoti galutinį balą? \n 1 - pagal vidurkį \n 2 - pagal medianą \n Pasirinkite: ";
     pasirinkimas = skaiciu_mastelis("", 1, 2);  
     cout<<"Kaip norite rikiuoti rezultatus? \n 1 - pagal vardą \n 2 - pagal pavardę \n 3 - pagal galutinį balą \n Pasirinkite: ";
@@ -38,8 +42,10 @@ system("powershell ls studentai*.txt");
     else if(veiksmas==2) generavimasSk(A, grupe, pasirinkimas);
     else if(veiksmas==3) generavimasVisko(A, grupe, pasirinkimas);
     else if (veiksmas==4) {
-        
-        grupe = bufer_nusk( pasirinkimas, m);
+        string read_vardas;
+        cout << "Iveskite failo pavadinimą iš sarašo (pvz. studentai10000.txt): ";
+        cin >> read_vardas;
+        grupe = bufer_nusk( read_vardas,pasirinkimas, m);
     }
    
 

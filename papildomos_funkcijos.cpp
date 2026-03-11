@@ -58,11 +58,11 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
     }
     
 }
-void studentoLygis(vector<Studentas> &grupe)
+void studentoLygis(vector<Studentas> &grupe, vector<Studentas> &vargsiukai, vector<Studentas> &smartukai)
 {
     for (auto &A : grupe) {
-        if(A.rez<5.0) A.lygis="vargšiukas";
-        else A.lygis="smartas";
+        if(A.rez<5.0) vargsiukai.push_back(A);
+        else smartukai.push_back(A);
     }
 }
 string vardo_skaitymas(const string &prompt)

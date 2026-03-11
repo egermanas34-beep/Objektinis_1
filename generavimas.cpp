@@ -87,16 +87,16 @@ void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
     
     }
 }    
-void failuGeneravimas(int &pasirinkimas)
+void failuGeneravimas( int &n)
 {
-    int m = skaiciu_mastelis("Kiek yra studentų? ", 1, 10000000);
-    std::ofstream failas("studentai_"+std::to_string(m)+".txt");
+    
+    std::ofstream failas("studentai_"+std::to_string(n)+".txt");
     if (!failas.is_open()) {
-        cout << "Nepavyko sukurti failo studentai_" << m << ".txt" << endl;
+        cout << "Nepavyko sukurti failo studentai_" << n << ".txt" << endl;
         return;
     }
-    int n = skaiciu_mastelis("Kiek pažymių norite sugeneruoti? ", 1, Maxpazymiu);
-
+    //int m = skaiciu_mastelis("Kiek pažymių norite sugeneruoti? ", 1, Maxpazymiu);
+    int m = 10; // Generuojame 10 pažymių kiekvienam studentui testui
      mt19937 mt(static_cast<long unsigned int>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));// Inicijuojame atsitiktinių skaičių generatorių su dabartiniu laiku 
    //static_cast<long unsigned int> naudojamas norint užtikrinti, kad laiko reikšmė būtų tinkamai konvertuota į generatoriaus sėklą
    uniform_int_distribution<int> dist(0,9);// Sukuriame tolygų skaičių pasiskirstymą nuo 0 iki 9   
@@ -106,13 +106,13 @@ void failuGeneravimas(int &pasirinkimas)
    string pavardes_v[10]={"Pavardenis1", "Pavardenis2", "Pavardenis3", "Pavardenis4", "Pavardenis5", "Pavardenis6", "Pavardenis7", "Pavardenis8", "Pavardenis9", "Pavardenis10"};
    failas<<left<<setw(15)<<"Vardas"<<left<<setw(15)<<"Pavarde";
    int a=45;
-   for(int i=0; i<n;i++)
+   for(int i=0; i<m;i++)
    {
     failas<<left<<setw(5)<<"ND"+std::to_string(i+1);
     a+=5;
    }
    failas<<left<<setw(5)<<"Egz.\n";
-   for(int i=0;i<m;i++)
+   for(int i=0;i<n;i++)
     {
         string vardas=vardai[dist(mt)];
         string pavarde;
@@ -124,7 +124,7 @@ void failuGeneravimas(int &pasirinkimas)
         }
         failas<<left<<setw(15)<<vardas<<left<<setw(15)<<pavarde;
         
-        for(int j=0;j<n;j++)
+        for(int j=0;j<m;j++)
         {
             int temp = dist(mt)+1; // generuojam pazymius nuo 1 iki 10
             failas<<left<<setw(5)<<temp;

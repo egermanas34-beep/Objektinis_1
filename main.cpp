@@ -43,6 +43,7 @@ system("powershell ls studentai*.txt");
 
     
     rikiavimas(grupe, rik);
+    studentoLygis(grupe);
    outputas(grupe, pasirinkimas, isvedimas);
     return 0;
 }

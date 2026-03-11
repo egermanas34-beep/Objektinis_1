@@ -58,7 +58,13 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
     }
     
 }
-
+void studentoLygis(vector<Studentas> &grupe)
+{
+    for (auto &A : grupe) {
+        if(A.rez<5.0) A.lygis="vargšiukas";
+        else A.lygis="smartas";
+    }
+}
 string vardo_skaitymas(const string &prompt)
 {
     string value;

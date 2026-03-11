@@ -18,6 +18,8 @@ system("powershell ls studentai*.txt");
     
     Studentas A;
     vector<Studentas> grupe;
+    vector<Studentas> vargsiukai;
+    vector<Studentas> smartukai;
     int pasirinkimas;
     int isvedimas;
     int m;
@@ -44,8 +46,8 @@ system("powershell ls studentai*.txt");
 
     
     rikiavimas(grupe, rik);
-    studentoLygis(grupe);
-   outputas(grupe, pasirinkimas, isvedimas, m);
+    studentoLygis(grupe, vargsiukai, smartukai);
+   outputas(vargsiukai, smartukai, pasirinkimas, isvedimas, m);
    
     return 0;
 }

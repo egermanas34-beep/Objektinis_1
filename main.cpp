@@ -20,6 +20,7 @@ system("powershell ls studentai*.txt");
     vector<Studentas> grupe;
     int pasirinkimas;
     int isvedimas;
+    int m;
     cout<<"Ką jūs norite padaryti? \n 1 - rankiniu būdu įvesti studentus \n 2 - generuoti tik pažymius \n 3 - generuoti vardus su pažymiais \n 4 - nuskaityti iš failo \n 5 -baigti darbą \n 6 -generuoti failą \n Pasirinkite: ";
     int veiksmas = skaiciu_mastelis("", 1, 6);
     if(veiksmas==5) return 0;
@@ -36,7 +37,7 @@ system("powershell ls studentai*.txt");
     else if(veiksmas==3) generavimasVisko(A, grupe, pasirinkimas);
     else if (veiksmas==4) {
         
-        grupe = bufer_nusk( pasirinkimas);
+        grupe = bufer_nusk( pasirinkimas, m);
     }
    
 
@@ -44,7 +45,8 @@ system("powershell ls studentai*.txt");
     
     rikiavimas(grupe, rik);
     studentoLygis(grupe);
-   outputas(grupe, pasirinkimas, isvedimas);
+   outputas(grupe, pasirinkimas, isvedimas, m);
+   
     return 0;
 }
 

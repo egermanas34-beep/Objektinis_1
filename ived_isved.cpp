@@ -3,13 +3,14 @@
 #include "papildomos.h"
 #include "Iv_Isv.h"
 
-vector<Studentas> bufer_nusk(int &pasirinkimas)
+vector<Studentas> bufer_nusk(int &pasirinkimas, int &m)
 {
     vector<Studentas> grupe;// Sukuriame tuščią studentų grupės vektorių
    while(true)
     {
     try
-    {
+    { m=0;
+        
         string read_vardas;
         cout << "Iveskite failo pavadinimą iš sarašo (pvz. studentai10000.txt): ";
         cin >> read_vardas;
@@ -79,6 +80,7 @@ vector<Studentas> bufer_nusk(int &pasirinkimas)
         
             A.paz.clear(); // Išvalome pažymių vektorių, kad jis būtų tuščias prieš kitą studento įvedimą
             grupe.push_back(A);
+             m++;
         }
 
         std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
@@ -142,13 +144,13 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         cin>>m;
     }
 }
-void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas)
+void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas, int &m)
 {
     
     auto start = std::chrono::high_resolution_clock::now();// Pradedame matuoti laiką
     /* std::chrono::high_resolution_clock::now() funkcija grąžina dabartinį laiką, 
     kuris bus naudojamas vėliau apskaičiuoti, kiek laiko užtruko failo nuskaitymas ir apdorojimas*/
-    auto spausdinti_i_srauta = [&](std::ostream &out)// Lambda funkcija, kuri spausdina rezultatus į nurodytą srautą (ekraną arba failą)
+   /* auto spausdinti_i_srauta = [&](std::ostream &out)// Lambda funkcija, kuri spausdina rezultatus į nurodytą srautą (ekraną arba failą)
     {
         if(pasirinkimas==1) 
         {
@@ -174,28 +176,61 @@ void outputas(const vector<Studentas> &grupe, int &pasirinkimas, int &isvedimas)
             }
         }
     };
-
+    */
     if(isvedimas==2)
     {
-        std::ofstream out_f("rezultatai.txt");
-        if (!out_f.is_open())
-        {
-            cout << "Nepavyko atidaryti failo rezultatai.txt" << endl;
-            return;
-        }
-        spausdinti_i_srauta(out_f);
+        std::ofstream out_f("vargsiukai"+std::to_string(m)+".txt");
+        std::ofstream out_s("smartukai"+std::to_string(m)+".txt");
         
-       cout<<"Rezultatai išsaugoti faile rezultatai.txt"<<endl;
+        if(pasirinkimas==1) 
+        {
+            out_f << left << setw(15) << "Vardas:" << left << setw(30) << "Pavardė:" << left << setw(45) << "Galutinis(vid.):" << '\n';
+            out_f << " -------------------------------------------------------------------------------------------------------------------" << '\n';
+            out_f << fixed << setprecision(2);
+            out_s << left << setw(15) << "Vardas:" << left << setw(30) << "Pavardė:" << left << setw(45) << "Galutinis(vid.):" << '\n';
+            out_s << " -------------------------------------------------------------------------------------------------------------------" << '\n';
+            out_s << fixed << setprecision(2);
+            for (const auto &A : grupe)
+            {
+                if(A.lygis=="vargšiukas")
+                out_f << left << setw(15) << A.Vardas << left << setw(30) << A.Pavarde << left << setw(45) << A.rez << '\n';
+                else
+                 out_s << left << setw(15) << A.Vardas << left << setw(30) << A.Pavarde << left << setw(45) << A.rez << '\n';
+                 /// Išvedame vargšiukus į vieną failą, o smartus į kitą failą, naudodami if sąlygą, kuri tikrina studento lygį
+                }
+        }
+       else
+        {
+            out_f << left << setw(15) << "Vardas:" << left << setw(30) << "Pavardė:" << left << setw(45) << "Galutinis(med.):" << '\n';
+            out_f << " -------------------------------------------------------------------------------------------------------------------" << '\n';
+            out_f << fixed << setprecision(2);
+            out_s << left << setw(15) << "Vardas:" << left << setw(30) << "Pavardė:" << left << setw(45) << "Galutinis(med.):" << '\n';
+            out_s << " -------------------------------------------------------------------------------------------------------------------" << '\n';
+            out_s << fixed << setprecision(2);
+            for (const auto &A : grupe)
+            {
+               
+                if(A.lygis=="vargšiukas")
+                out_f << left << setw(15) << A.Vardas << left << setw(30) << A.Pavarde << left << setw(45) << A.rez << '\n';
+                else
+                 out_s << left << setw(15) << A.Vardas << left << setw(30) << A.Pavarde << left << setw(45) << A.rez << '\n';
+             /// Išvedame vargšiukus į vieną failą, o smartus į kitą failą, naudodami if sąlygą, kuri tikrina studento lygį
+            }
+        }
+        
+        
+       cout<<"Rezultatai išsaugoti failuose vargsiukai"+std::to_string(m)+".txt ir smartukai"+std::to_string(m)+".txt"<<endl;
        std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
     //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
     cout << "Duomenų išvedimas užtruko: " << diff.count() << " sekundžių." << endl;
     out_f.close();
+    out_s.close();
        return;
     }
    
 
     
-    spausdinti_i_srauta(cout);
+    //spausdinti_i_srauta(cout);
      std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
     //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
     cout << "Duomenų išvedimas užtruko: " << diff.count() << " sekundžių." << endl;

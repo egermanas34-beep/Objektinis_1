@@ -1,12 +1,20 @@
 # Objektinis_1
 Buvo atliktas tyrimas tam, kad patikrinti, per kiek laiko yra sugeneruojami skirtingo dydzio studentu failai.
+
 Pirma karta atlikus generavima, rezultatai buvo tokie:
+
 studentai_1000.txt kurimo laikas: 0.0163294 s
+
 studentai_10000.txt kurimo laikas: 0.0271894 s
+
 studentai_100000.txt kurimo laikas: 0.25156 s
+
 studentai_1000000.txt kurimo laikas: 2.8381 s
+
 studentai_10000000.txt kurimo laikas: 25.1776 s
+
 Antra karta generuojant(failai jau buvo sukurti, ju duomenys tik buvo pakeisti), rezultatas buvo toks:
+
 studentai_1000.txt kurimo laikas: 0.0086574 s
 studentai_10000.txt kurimo laikas: 0.0305348 s
 studentai_100000.txt kurimo laikas: 0.216627 s

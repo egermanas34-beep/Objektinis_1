@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
+#include <deque>
 #include <iomanip>
 #include <algorithm>
 #include <limits>

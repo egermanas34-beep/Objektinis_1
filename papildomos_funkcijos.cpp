@@ -1,26 +1,31 @@
 #include "papildomos.h"
 #include "generavimas.h"
 
-void rikiavimas(vector<Studentas> &grupe, int &rik)
+template <typename Container, typename Compare>// Templatizuota funkcija rikiuoti, kuri naudoja std::sort algoritmą, kad rikiuotų bet kokio tipo konteinerį (vector, deque) pagal pateiktą comparatorių.
+static void rikiuoti(Container &grupe, Compare comp) // Container yra bet kokio tipo konteineris, o Compare yra funkcija, kuri nurodo, kaip rikiuoti elementus
 {
+    sort(grupe.begin(), grupe.end(), comp);
+}
+template <typename Compare>// Templatizuota funkcija rikiuoti, kuri naudoja std::list::sort metodą, kad rikiuotų std::list konteinerį pagal pateiktą comparatorių.
+static void rikiuoti(std::list<Studentas> &grupe, Compare comp) // Specializacija funkcijai rikiuoti, skirta std::list konteineriui, nes std::list turi savo sort metodą, kuris yra optimizuotas darbui su sąrašu.
+{
+    grupe.sort(comp);
+}
+// Funkcija rikiavimui, kuri naudoja lambda funkcijas kaip comparatorius, kad galėtų rikiuoti pagal vardą, pavardę arba galutinį balą, priklausomai nuo vartotojo pasirinkimo.
+void rikiavimas(StudentuGrupe &grupe, int &rik)
+{
+    // Lambda comparatoriai
+    auto compare_vardas = [](const Studentas &a, const Studentas &b) { return a.Vardas > b.Vardas; };
+    auto compare_pavarde = [](const Studentas &a, const Studentas &b) { return a.Pavarde > b.Pavarde; };
+    auto compare_rez = [](const Studentas &a, const Studentas &b) { return a.rez > b.rez; };
+
+    // list naudos list::sort(), o vector/deque naudos std::sort()
     if (rik == 1) {
-        sort(grupe.begin(), grupe.end(), [](const Studentas &a, const Studentas &b) //Lambda funkcija, kuri nurodo, kaip rikiuoti studentus pagal vardą
-        {
-            return a.Vardas > b.Vardas; // Rikiuojame pagal vardą maŽėjimo tvarka
-        });
-        ///lambda funkcija-galima aprasyti tiesiog toje vietoje, kur jos reikia.
-        ///Sintaksė: [capture](parameters) -> return_type { body }
-        ///capture - nurodo, kokius kintamuosius iš išorinėsaplinkos lambda funkcija gali naudoti.
-        /// parameters - nurodo, kokius parametrus lambda funkcija priima. return_type - nurodo, kokio tipo reikšmę lambda funkcija grąžina. body - tai lambda funkcijos kūnas, kuriame aprašoma, ką ji daro.
+        rikiuoti(grupe, compare_vardas);
     } else if (rik == 2) {
-        sort(grupe.begin(), grupe.end(), [](const Studentas &a, const Studentas &b) {
-            return a.Pavarde > b.Pavarde; // Rikiuojame pagal pavardę maŽėjimo tvarka
-        });
+        rikiuoti(grupe, compare_pavarde);
     } else if (rik == 3) {
-        sort(grupe.begin(), grupe.end(), [](const Studentas &a, const Studentas &b) 
-        {
-            return a.rez > b.rez; // Rikiuojame pagal rezultatą mažėjimo tvarka
-        });
+        rikiuoti(grupe, compare_rez);
     }
 }
 int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
@@ -58,14 +63,13 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
     }
     
 }
-void studentoLygis(vector<Studentas> &grupe, vector<Studentas> &vargsiukai, vector<Studentas> &smartukai)
+void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrupe &smartukai)
 {
     for (auto &A : grupe) {
         if(A.rez<5.0) vargsiukai.push_back(A);
         else smartukai.push_back(A);
     }
     grupe.clear(); // Išvalome pradinį vektorių, kad atlaisvintume atmintį, nes visi studentai jau yra perkelti į vargsiukai ir smartukai vektorius
-    grupe.shrink_to_fit(); // Sumažiname grupe vektoriaus talpą iki dabartinio dydžio, kad atlaisvintume atmintį, kuri buvo rezervuota grupe vektoriui, bet dabar yra tuščia. shrink_to_fit() funkcija yra naudojama norint sumažinti vektoriaus talpą iki dabartinio dydžio, tačiau tai nėra garantuota, kad ji tikrai sumažins talpą, nes tai priklauso nuo implementacijos ir gali būti ignoruojama kai kuriose situacijose. Tačiau tai yra geras būdas bandyti atlaisvinti atmintį, kai žinome, kad vektorius nebus naudojamas daugiau ir norime sumažinti jo atminties naudojimą.
 }
 string vardo_skaitymas(const string &prompt)
 {

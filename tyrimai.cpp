@@ -28,7 +28,7 @@ void tyrimasVisasProcesas() {
         
 
         auto pradzia = std::chrono::high_resolution_clock::now();
-        vector<Studentas> grupe = bufer_nusk(failas, pasirinkimas, n); // Nuskaitome duomenis iš failo
+        StudentuGrupe grupe = bufer_nusk(failas, pasirinkimas, n); // Nuskaitome duomenis iš failo
         auto pabaiga1 = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> trukme = pabaiga1 - pradzia;
         cout << failas << " nuskaitymo ir apdorojimo laikas: " << trukme.count() << " s\n";
@@ -38,8 +38,8 @@ void tyrimasVisasProcesas() {
         std::chrono::duration<double> rikiavimo_trukme = pabaiga2 - pabaiga1;
         cout << failas << " rikiavimo laikas mazejimo tvarka su sort funkcija: " << rikiavimo_trukme.count() << " s\n";
 
-        vector<Studentas> vargsiukai;
-        vector<Studentas> smartukai;
+        StudentuGrupe vargsiukai;
+        StudentuGrupe smartukai;
         studentoLygis(grupe, vargsiukai, smartukai); // Skirstome į vargšus ir smartukus
         auto pabaiga3 = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> studentoLygio_trukme = pabaiga3 - pabaiga2;

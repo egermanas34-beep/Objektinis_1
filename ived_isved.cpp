@@ -3,9 +3,9 @@
 #include "papildomos.h"
 #include "Iv_Isv.h"
 
-vector<Studentas> bufer_nusk(string &read_vardas,int &pasirinkimas, int &m)
+StudentuGrupe bufer_nusk(string &read_vardas,int &pasirinkimas, int &m)
 {
-    vector<Studentas> grupe;// Sukuriame tuščią studentų grupės vektorių
+    StudentuGrupe grupe;// Sukuriame tuščią studentų grupės vektorių
    while(true)
     {
     try
@@ -17,7 +17,7 @@ vector<Studentas> bufer_nusk(string &read_vardas,int &pasirinkimas, int &m)
             throw std::runtime_error("Nepavyko atidaryti failo " + read_vardas);//jeigu failas nebuvo atidarytas, ismeta klaida
         
         }
-        auto start = std::chrono::high_resolution_clock::now();// Pradedame matuoti laiką
+       // auto start = std::chrono::high_resolution_clock::now();// Pradedame matuoti laiką
         /* std::chrono::high_resolution_clock::now() funkcija grąžina dabartinį laiką, 
         kuris bus naudojamas vėliau apskaičiuoti, kiek laiko užtruko failo nuskaitymas ir apdorojimas*/
         string eil;// Sukuriame eilutės kintamąjį, kuris bus naudojamas skaityti kiekvieną eilutę iš failo
@@ -80,9 +80,9 @@ vector<Studentas> bufer_nusk(string &read_vardas,int &pasirinkimas, int &m)
              m++;
         }
 
-        std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
+        //std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;// Apskaičiuojame, kiek laiko praėjo nuo pradžios iki dabar, ir išsaugome šį laiką diff kintamajame
         //std::chrono::duration<double> yra tipas, kuris saugo laiką sekundėmis kaip double reikšmę, o diff.count() grąžina šią reikšmę, kurią mes išvedame į ekraną
-        cout << "Failo nuskaitymas ir apdorojimas uztruko: " << diff.count() << " sekundziu." << endl;
+        //cout << "Failo nuskaitymas ir apdorojimas uztruko: " << diff.count() << " sekundziu." << endl;
         open_f.close();
         return grupe;
     }   
@@ -93,7 +93,7 @@ vector<Studentas> bufer_nusk(string &read_vardas,int &pasirinkimas, int &m)
     }
 }
 }
-void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
+void inputas(Studentas &A, StudentuGrupe &grupe, int &pasirinkimas)
 {
     int m = 1; // Pradinis studentų kiekis, nustatomas į 1, kad įvesties ciklas prasidėtų
     int k = 1; // Pradinis pažymių kiekis, nustatomas į 1, kad įvesties ciklas prasidėtų
@@ -141,7 +141,7 @@ void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         cin>>m;
     }
 }
-void outputas(const vector<Studentas> &vargsiukai, const vector<Studentas> &smartukai, int &pasirinkimas, int &isvedimas, int &m)
+void outputas(const StudentuGrupe &vargsiukai, const StudentuGrupe &smartukai, int &pasirinkimas, int &isvedimas, int &m)
 {
     
     auto start = std::chrono::high_resolution_clock::now();// Pradedame matuoti laiką

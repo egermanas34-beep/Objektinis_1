@@ -1,7 +1,7 @@
 #include "generavimas.h"
 #include "papildomos.h"
 
-void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
+void generavimasSk(Studentas &A, StudentuGrupe &grupe, int &pasirinkimas)
 {
     int m = skaiciu_mastelis("Kiek yra studentų? ", 1, 1000);
     for(int i=0;i<m;i++)
@@ -41,7 +41,7 @@ void generavimasSk(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
         A.paz.clear();
     }
 }
-void generavimasVisko(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas)
+void generavimasVisko(Studentas &A, StudentuGrupe &grupe, int &pasirinkimas)
 {
    mt19937 mt(static_cast<long unsigned int>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));// Inicijuojame atsitiktinių skaičių generatorių su dabartiniu laiku 
    //static_cast<long unsigned int> naudojamas norint užtikrinti, kad laiko reikšmė būtų tinkamai konvertuota į generatoriaus sėklą

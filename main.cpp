@@ -18,9 +18,9 @@ system("powershell ls studentai*.txt");
 
     
     Studentas A;
-    vector<Studentas> grupe;
-    vector<Studentas> vargsiukai;
-    vector<Studentas> smartukai;
+    StudentuGrupe grupe;
+    StudentuGrupe vargsiukai;
+    StudentuGrupe smartukai;
     int pasirinkimas;
     int isvedimas;
     int m;

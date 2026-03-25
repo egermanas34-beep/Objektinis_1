@@ -1,6 +1,6 @@
 #pragma once
 #include "studentas.h"
 
-void inputas(Studentas &A, vector<Studentas> &grupe, int &pasirinkimas);
-void outputas(const vector<Studentas> &vargsiukai, const vector<Studentas> &smartukai, int &pasirinkimas, int &isvedimas, int &m);
-vector<Studentas> bufer_nusk(string &read_vardas,int &pasirinkimas, int &m);
+void inputas(Studentas &A, StudentuGrupe &grupe, int &pasirinkimas);
+void outputas(const StudentuGrupe &vargsiukai, const StudentuGrupe &smartukai, int &pasirinkimas, int &isvedimas, int &m);
+StudentuGrupe bufer_nusk(string &read_vardas,int &pasirinkimas, int &m);

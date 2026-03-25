@@ -17,3 +17,4 @@ Buvo pravestas testas tam , kad patikrinti, su kuriuo konteineriu programa veiks
 | 10000000    | vector      | 30.17       | 14.93      | 1.82       | 69.08   |
 | 10000000    | list        | 27.225      | 13.441     | 4.313      | 67.65   |
 | 10000000    | deque       | 27.38       | 18.117     | 1.84       | 70.15   |
+Atlikus si testa galima apibemdrinti, kad dirbant su failais, kuriuose yra daugiau nei 100,000 irasu, std:: list konteineris yra beveik visuose parametruose efektyvesnis greicio atzvilgiu.

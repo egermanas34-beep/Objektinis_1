@@ -18,3 +18,21 @@ Buvo pravestas testas tam , kad patikrinti, su kuriuo konteineriu programa veiks
 | 10000000    | list        | 27.225      | 13.441     | 4.313      | 67.65   |
 | 10000000    | deque       | 27.38       | 18.117     | 1.84       | 70.15   |
 Atlikus si testa galima apibemdrinti, kad dirbant su failais, kuriuose yra daugiau nei 100,000 irasu, std:: list konteineris yra beveik visuose parametruose efektyvesnis greicio atzvilgiu.
+
+| Failo dydis | Konteineris | CPU% | RAM(MB) | SSD(MB/s) |   |
+|-------------|-------------|------|---------|-----------|---|
+| 1000        | vector      | 3.3  | 1.1     | 4.4       |   |
+| 1000        | list        | 3.1  | 0.8     | 3.4       |   |
+| 1000        | deque       | 3.2  | 0.8     | 4.3       |   |
+| 10000       | vector      | 5.7  | 2.6     | 10.1      |   |
+| 10000       | list        | 5.8  | 2.8     | 10.7      |   |
+| 10000       | deque       | 5.6  | 2.2     | 9.6       |   |
+| 100000      | vector      | 6    | 10.4    | 13.2      |   |
+| 100000      | list        | 6.1  | 14.6    | 13.3      |   |
+| 100000      | deque       | 6.1  | 15.4    | 11.8      |   |
+| 1000000     | vector      | 6.2  | 119.7   | 14.6      |   |
+| 1000000     | list        | 6.4  | 136.4   | 14.6      |   |
+| 1000000     | deque       | 6.1  | 145.1   | 14.5      |   |
+| 10000000    | vector      | 6.2  | 1375.2  | 35.3      |   |
+| 10000000    | list        | 6.7  | 1679.8  | 38.5      |   |
+| 10000000    | deque       | 6.2  | 1486.6  | 37.6      |   |

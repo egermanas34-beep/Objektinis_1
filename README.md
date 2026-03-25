@@ -1,4 +1,5 @@
 # Objektinis_1
+Buvo pravestas testas tam , kad patikrinti, su kuriuo konteineriu programa veiks greiciausiai ir kurioje vietoje vienas ar kitas konteineris geriau save parodys.
 | Failo dydis | Konteineris | Nuskaitymas | Rikiavimas | Skirstymas | Bendras |
 |-------------|-------------|-------------|------------|------------|---------|
 | 1000        | vector      | 0.0125      | 0          | 0          | 0.0335  |

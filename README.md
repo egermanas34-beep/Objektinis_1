@@ -37,5 +37,6 @@ Taip pat buvo pravestas testas tam, kad patiktinti kaip kompiuterio komponentu a
 | 10000000    | vector      | 6.2  | 1375.2  | 35.3      |   |
 | 10000000    | list        | 6.7  | 1679.8  | 38.5      |   |
 | 10000000    | deque       | 6.2  | 1486.6  | 37.6      |   |
+
 Atlikus testus, pastebeta, kad CPU apkrova tapr konteineriu skyresi nedaug, nes visais atvejais ji isliko panasiame intervale. Didejant failo dydziams, ryskiausiai augo RAM poreikis. Maziausia RAM naudojima rode vector, o didziausia dazniausiai deque ir list konteineriai. SSD apkrova taip pat didejo su failu dydziu. Iki 1000000 irasu skirtumai tarp konteineriu buvo nedideli, taciau ties 10000000 irasu list ir deque rode didesni SSD pralaiduma nei vector.
 Todel apibendrinant galima pasakyti, kad vector konteineris yra efektyviausias dirbant su dideliais duomenu kiekiais.

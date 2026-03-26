@@ -50,10 +50,11 @@ system("powershell ls studentai*.txt");
     }
    
 
+int rus = skaiciu_mastelis("Pasirinkite studentu skirstymo strategija (1, 2 arba 3): ", 1, 3);
 
     
     rikiavimas(grupe, rik);
-    studentoLygis(grupe, vargsiukai, smartukai);
+    studentoLygis(grupe, vargsiukai, smartukai, rus);
    outputas(vargsiukai, smartukai, pasirinkimas, isvedimas, m);
    
     return 0;

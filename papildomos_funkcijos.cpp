@@ -4,7 +4,7 @@
 template <typename Container, typename Compare>// Templatizuota funkcija rikiuoti, kuri naudoja std::sort algoritmą, kad rikiuotų bet kokio tipo konteinerį (vector, deque) pagal pateiktą comparatorių.
 static void rikiuoti(Container &grupe, Compare comp) // Container yra bet kokio tipo konteineris, o Compare yra funkcija, kuri nurodo, kaip rikiuoti elementus
 {
-    sort(grupe.begin(), grupe.end(), comp);
+    sort(grupe.begin(), grupe.end(), comp);// sort algoritmas, kuris rikiuoja elementus nuo begin() iki end() pagal comp funkciją, kuri yra lambda funkcija, nurodanti rikiavimo kriterijų (pvz., pagal vardą, pavardę ar galutinį balą)
 }
 template <typename Compare>// Templatizuota funkcija rikiuoti, kuri naudoja std::list::sort metodą, kad rikiuotų std::list konteinerį pagal pateiktą comparatorių.
 static void rikiuoti(std::list<Studentas> &grupe, Compare comp) // Specializacija funkcijai rikiuoti, skirta std::list konteineriui, nes std::list turi savo sort metodą, kuris yra optimizuotas darbui su sąrašu.
@@ -63,13 +63,50 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
     }
     
 }
-void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrupe &smartukai)
+void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrupe &smartukai, int &rusiavimas)
 {
-    for (auto &A : grupe) {
-        if(A.rez<5.0) vargsiukai.push_back(A);
-        else smartukai.push_back(A);
+    vargsiukai.clear();
+    smartukai.clear();
+   
+    if (rusiavimas == 1) 
+    {
+        // 1 strategija: visi studentai lieka grupes, kopijuojami į vargsiukai ir smartukai
+        for (const auto &A : grupe) 
+        {
+            if (A.rez < 5.0) vargsiukai.push_back(A);
+            else smartukai.push_back(A);
+        }
     }
-    grupe.clear(); // Išvalome pradinį vektorių, kad atlaisvintume atmintį, nes visi studentai jau yra perkelti į vargsiukai ir smartukai vektorius
+    else if (rusiavimas == 2) 
+    {
+        // 2 strategija: vargsiukai iškeliami į naująjį konteinerį ir ištrinami iš grupes
+        for (const auto &A : grupe) 
+        {
+            if (A.rez < 5.0) vargsiukai.push_back(A);
+        }
+        
+        // Ištrinti vargsiukus iš grupes - naudojame erase-remove idiomą (veikia su vector/deque)
+        // arba list::remove_if (veikia su list)
+        grupe.erase(std::remove_if(grupe.begin(), grupe.end(), [](const Studentas &A) { return A.rez < 5.0; }), grupe.end());
+        
+        // Dabar grupe turi tik smartukus
+        smartukai = grupe;
+    }
+    else if (rusiavimas == 3)
+    {
+        // 3 strategija: naudoti efektyvias šalinimo procedūras
+        for (const auto &A : grupe) 
+        {
+            if (A.rez < 5.0) vargsiukai.push_back(A);
+        }
+        
+        // Ištrinti vargsiukus iš grupes naudojant erase-remove (veikia su visais konteinerio tipais)
+        grupe.erase(std::remove_if(grupe.begin(), grupe.end(), 
+                                   [](const Studentas &A) { return A.rez < 5.0; }), 
+                    grupe.end());
+        
+        smartukai = grupe;
+    }
 }
 string vardo_skaitymas(const string &prompt)
 {

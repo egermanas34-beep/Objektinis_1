@@ -17,15 +17,16 @@ void tyrimasFailoKurimas() {
     }
 }
 void tyrimasVisasProcesas() {
-    vector<int> dydziai = {1000, 10000, 100000, 1000000, 10000000}; 
+   vector<int> dydziai = {1000, 10000, 100000, 1000000, 10000000}; 
 
     for (int n : dydziai) 
     {
+    
         string failas = "studentai_" + std::to_string(n) + ".txt";
         int pasirinkimas = 1;
         int rikiavimo_budas = 3;
         int isvedimas = 2;
-        
+        int rusiavimas = 2;
 
         auto pradzia = std::chrono::high_resolution_clock::now();
         StudentuGrupe grupe = bufer_nusk(failas, pasirinkimas, n); // Nuskaitome duomenis iš failo
@@ -40,7 +41,7 @@ void tyrimasVisasProcesas() {
 
         StudentuGrupe vargsiukai;
         StudentuGrupe smartukai;
-        studentoLygis(grupe, vargsiukai, smartukai); // Skirstome į vargšus ir smartukus
+        studentoLygis(grupe, vargsiukai, smartukai, rusiavimas); // Skirstome į vargšus ir smartukus
         auto pabaiga3 = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> studentoLygio_trukme = pabaiga3 - pabaiga2;
         cout << failas << " studentų lygio nustatymo laikas: " << studentoLygio_trukme.count() << " s\n";

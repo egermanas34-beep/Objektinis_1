@@ -54,3 +54,40 @@ Buvo atliktas testas, kurio metu buvo patikrintas keliu strategiju veikimo laika
 | 3          | list        | 2582    | 74.2411   |  6.95656       |
 | 3          | deque       | 2038    | 75.5814   | 2.72243        |
 Po testu matome, kad antroji strategija buvo naudingiausia tiek atminties naudojimo, tiek laiko atzvilgiu, kas turetu buti keista, nes trecioji strategija turejo itraukta i save "efektyvius" darbo su konteineriais metodus, bet tai nepakeite jos veikimo spartumo.
+
+## Projekto paleidimas su CMake
+
+Šis projektas naudoja `CMakeLists.txt` failą, todėl programą galima sukompiliuoti ir paleisti naudojant CMake.
+
+### Reikalavimai
+
+Prieš paleidžiant projektą, reikia turėti įdiegtus:
+
+- `CMake`
+- `C++` kompiliatorių
+  - Windows aplinkoje tinka `Visual Studio` su C++ įrankiais
+  - arba `MinGW / g++`
+
+---
+
+## Projekto struktūra
+
+Pagrindiniame projekto aplanke yra:
+
+- `CMakeLists.txt`
+- `.cpp` failai
+- `.h` failai
+
+CMake automatiškai surenka visus `.cpp` failus ir iš jų sukuria vykdomąjį failą.
+
+---
+
+## Kompiliavimas ir paleidimas
+
+### 1. Sukurti `build` aplanką
+
+Terminale atsidarykite pagrindinį projekto aplanką ir vykdykite:
+
+```bash
+mkdir build
+cd build

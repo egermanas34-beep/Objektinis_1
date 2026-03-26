@@ -79,34 +79,21 @@ void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrup
     }
     else if (rusiavimas == 2) 
     {
-        // 2 strategija: vargsiukai iškeliami į naująjį konteinerį ir ištrinami iš grupes
-        for (const auto &A : grupe) 
+        // 2 strategija: vienu perėjimu vargsiukus perkeliame, o iš grupes ištriname.
+        for (auto &A : grupe)// Naudojame iteratorių, kad galėtume saugiai trinti elementus iš grupės, kol juos perkeliame į vargsiukus arba smartukus
         {
-            if (A.rez < 5.0) vargsiukai.push_back(A);
+            if (A.rez < 5.0)
+            {
+                vargsiukai.push_back(A);
+               grupe.pop_back(); // Ištriname paskutinį elementą iš grupės, nes mes jį perkėlėme į vargsiukus
+                
+            }
+           
         }
-        
-        // Ištrinti vargsiukus iš grupes - naudojame erase-remove idiomą (veikia su vector/deque)
-        // arba list::remove_if (veikia su list)
-        grupe.erase(std::remove_if(grupe.begin(), grupe.end(), [](const Studentas &A) { return A.rez < 5.0; }), grupe.end());
-        
-        // Dabar grupe turi tik smartukus
         smartukai = grupe;
+        grupe.clear(); // Išvalome grupę, nes visi studentai jau yra perkeliami į vargsiukus arba smartukus
     }
-    else if (rusiavimas == 3)
-    {
-        // 3 strategija: naudoti efektyvias šalinimo procedūras
-        for (const auto &A : grupe) 
-        {
-            if (A.rez < 5.0) vargsiukai.push_back(A);
-        }
-        
-        // Ištrinti vargsiukus iš grupes naudojant erase-remove (veikia su visais konteinerio tipais)
-        grupe.erase(std::remove_if(grupe.begin(), grupe.end(), 
-                                   [](const Studentas &A) { return A.rez < 5.0; }), 
-                    grupe.end());
-        
-        smartukai = grupe;
-    }
+   
 }
 string vardo_skaitymas(const string &prompt)
 {

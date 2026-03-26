@@ -94,7 +94,7 @@ Terminale atsidarykite pagrindinį projekto aplanką ir vykdykite:
 `cmake --build .`
 ### 2. Paleisti programa
 Jeigu naudojamas Visual Studio kompiliatorius, .exe failas dažniausiai sukuriamas Debug aplanke, todel vykdikite:
-.\Debug\StudentuSistema.exe
+`.\Debug\StudentuSistema.exe`
 ### 3. Jei reikia perkompiliuoti projekta
 Jeigu buvo pakeistas kodas:
 `cmake --build .`
@@ -110,3 +110,6 @@ Windows Powershell:
 `cd build`
 `cmake ..`
 `cmake --build .`
+### 4. Paleidus StudentuSistema.exe
+Jeigu pirma karta paleidote programa ir norite dirbti su failais, jums juos reikes arba patiems susikurti, arba sugeneruoti juos, paspaudus atitinkamai tam nurodyta skaiciu.
+Toliau vykdant programa reikia lydetis nurodymais ekrane.

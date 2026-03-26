@@ -40,6 +40,8 @@ Taip pat buvo pravestas testas tam, kad patiktinti kaip kompiuterio komponentu a
 
 Atlikus testus, pastebeta, kad CPU apkrova tapr konteineriu skyresi nedaug, nes visais atvejais ji isliko panasiame intervale. Didejant failo dydziams, ryskiausiai augo RAM poreikis. Maziausia RAM naudojima rode vector, o didziausia dazniausiai deque ir list konteineriai. SSD apkrova taip pat didejo su failu dydziu. Iki 1000000 irasu skirtumai tarp konteineriu buvo nedideli, taciau ties 10000000 irasu list ir deque rode didesni SSD pralaiduma nei vector.
 Todel apibendrinant galima pasakyti, kad vector konteineris yra efektyviausias dirbant su dideliais duomenu kiekiais.
+
+Buvo atliktas testas, kurio metu buvo patikrintas keliu strategiju veikimo laikas ir kompiuterio atminties naudojimas programos studentu skirstymo i vargsiukus ir smartukus veikimo metu.
 | Strategija | Konteineris | RAM(MB) | Laikas(s) | Laikas rus.(s) |
 |------------|-------------|---------|-----------|----------------|
 | 1          | vector      | 2874    | 68.6899   | 3.77026        |

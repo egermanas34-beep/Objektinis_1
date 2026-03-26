@@ -92,3 +92,4 @@ Terminale atsidarykite pagrindinį projekto aplanką ir vykdykite:
 mkdir build
 cd build
 cmake ..
+cmake --build .

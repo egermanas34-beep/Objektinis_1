@@ -93,7 +93,15 @@ void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrup
         smartukai = grupe;
         grupe.clear(); // Išvalome grupę, nes visi studentai jau yra perkeliami į vargsiukus arba smartukus
     }
-   
+   else if( rusiavimas == 3)
+   {
+       // 3 strategija: dalijame su partition, vargsiukus perkeliame, grupėje paliekame tik smartukus.
+       auto border = std::partition(grupe.begin(), grupe.end(), [](const Studentas &A) { return A.rez >= 5.0; });
+
+       std::copy(border, grupe.end(), std::back_inserter(vargsiukai));
+       grupe.erase(border, grupe.end());
+       smartukai = grupe;
+   }
 }
 string vardo_skaitymas(const string &prompt)
 {

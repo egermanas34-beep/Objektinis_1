@@ -88,8 +88,25 @@ CMake automatiškai surenka visus `.cpp` failus ir iš jų sukuria vykdomąjį f
 
 Terminale atsidarykite pagrindinį projekto aplanką ir vykdykite:
 
-```bash
-mkdir build
-cd build
-cmake ..
-cmake --build .
+`mkdir build`
+`cd build`
+`cmake ..`
+`cmake --build .`
+### 2. Paleisti programa
+Jeigu naudojamas Visual Studio kompiliatorius, .exe failas dažniausiai sukuriamas Debug aplanke, todel vykdikite:
+.\Debug\StudentuSistema.exe
+### 3. Jei reikia perkompiliuoti projekta
+Jeigu buvo pakeistas kodas:
+`cmake --build .`
+Jeigu norima pilnai perkurti build failus, galima ištrinti build aplanką ir pakartoti visus žingsnius iš naujo:
+`rm -r build`
+`mkdir build`
+`cd build`
+`cmake ..`
+`cmake --build .`
+Windows Powershell:
+`Remove-Item -Recurse -Force build`
+`mkdir build`
+`cd build`
+`cmake ..`
+`cmake --build .`

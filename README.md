@@ -53,3 +53,4 @@ Buvo atliktas testas, kurio metu buvo patikrintas keliu strategiju veikimo laika
 | 3          | vector      | 2732    | 74.6873   | 2.63487        |
 | 3          | list        | 2582    | 74.2411   |  6.95656       |
 | 3          | deque       | 2038    | 75.5814   | 2.72243        |
+Po testu matome, kad antroji strategija buvo naudingiausia tiek atminties naudojimo, tiek laiko atzvilgiu, kas turetu buti keista, nes trecioji strategija turejo itraukta i save "efektyvius" darbo su konteineriais metodus, bet tai nepakeite jos veikimo spartumo.

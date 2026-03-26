@@ -113,3 +113,14 @@ Windows Powershell:
 ### 4. Paleidus StudentuSistema.exe
 Jeigu pirma karta paleidote programa ir norite dirbti su failais, jums juos reikes arba patiems susikurti, arba sugeneruoti juos, paspaudus atitinkamai tam nurodyta skaiciu.
 Toliau vykdant programa reikia lydetis nurodymais ekrane.
+## Apie versijas
+### v0.1
+Pirmoji versija, padaryta dviem budais, viena dalis padaryta su vektoriais, o kita su masyvais. Taip pat buvo prideta galimybe studentus generuoti arba tik pazymius, arba ir pazymius su vardais ir pavardem.
+### v0.2
+Antroji versija, kurioje prideta galimybe nuskaityti duomenis is failo bei spausdinti duomenis i faila.
+### v0.3
+Trecioje versijoje buvo pridetas isimciu valdymas.
+### v0.4
+Buvo prideta funkcija failu su studentais generavimo, taip pat galimybe studentus surusiuoti pagal ju galutini pazymi - tie kas surinko <5.0 buvo priskiri vargsiukam, o kiti smartukam.Taip pat buvo prideti programos spartos veikimo testai, kurie tikrino kiek laiko trunka vienos ar kitos programos funkcijos.
+### v1.0 
+Sioje versijoje buvo pridetas alias, kurio pagalba galima buvo tikrinti programos veikima su skirtingais konteineriu tipais(vector, list, deque). Taip pat buvo atlikti programos veikimo testai laiko, bei kompiuterio komponentu(CPU, RAM, ir SSD)  atzvilgiu. Taip pat sukurtas CMakeLists.txt failas, su kuriuo galima isidiegti sia programa.

@@ -65,8 +65,9 @@ int skaiciu_mastelis(const string &prompt, int min_val, int max_val)
 }
 void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrupe &smartukai, int &rusiavimas)
 {
-    vargsiukai.clear();
-    smartukai.clear();
+  // jeigu nori spausdinti i failus, komentuok situos
+    // vargsiukai.clear();
+    // smartukai.clear();
    
     if (rusiavimas == 1) 
     {
@@ -80,19 +81,17 @@ void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrup
     else if (rusiavimas == 2) 
     {
         // 2 strategija: vienu perėjimu vargsiukus perkeliame, o iš grupes ištriname.
-        for (auto &A : grupe)// Naudojame iteratorių, kad galėtume saugiai trinti elementus iš grupės, kol juos perkeliame į vargsiukus arba smartukus
+        auto it = std::remove_if(grupe.begin(), grupe.end(),[&](const Studentas& A)
         {
-            if (A.rez < 5.0)
-            {
-                vargsiukai.push_back(A);
-               grupe.pop_back(); // Ištriname paskutinį elementą iš grupės, nes mes jį perkėlėme į vargsiukus
-                
-            }
-           
+        if (A.rez < 5.0)
+        {
+            vargsiukai.push_back(A);
+            return true;
         }
-        smartukai = grupe;
-        grupe.clear(); // Išvalome grupę, nes visi studentai jau yra perkeliami į vargsiukus arba smartukus
-    }
+        return false;
+        });
+
+        grupe.erase(it, grupe.end());}
    else if( rusiavimas == 3)
    {
        // 3 strategija: dalijame su partition, vargsiukus perkeliame, grupėje paliekame tik smartukus.
@@ -102,6 +101,10 @@ void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrup
        grupe.erase(border, grupe.end());
        smartukai = grupe;
    }
+   //jeigu nori, kad nespausdintu i failus, komentuok situos
+   vargsiukai.clear();
+    smartukai.clear();
+   
 }
 string vardo_skaitymas(const string &prompt)
 {

@@ -26,14 +26,13 @@ void tyrimasVisasProcesas() {
         int pasirinkimas = 1;
         int rikiavimo_budas = 3;
         int isvedimas = 2;
-        int rusiavimas = 2;
+        int rusiavimas = 3;
 
         auto pradzia = std::chrono::high_resolution_clock::now();
         StudentuGrupe grupe = bufer_nusk(failas, pasirinkimas, n); // Nuskaitome duomenis iš failo
         auto pabaiga1 = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> trukme = pabaiga1 - pradzia;
         cout << failas << " nuskaitymo ir apdorojimo laikas: " << trukme.count() << " s\n";
-
         rikiavimas(grupe, rikiavimo_budas); // Rikiuojame pagal galutinį balą
          auto pabaiga2 = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> rikiavimo_trukme = pabaiga2 - pabaiga1;
@@ -53,6 +52,6 @@ void tyrimasVisasProcesas() {
         std::chrono::duration<double> visa_trukme = pabaiga4 - pradzia;
         cout<<" \n";
         cout << failas << " visas proceso laikas: " << visa_trukme.count() << " s\n";
-            cout << "-------------------------------------------------------------\n";
+        cout << "-------------------------------------------------------------\n";
     }
 }

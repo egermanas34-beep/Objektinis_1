@@ -84,8 +84,9 @@ void studentoLygis(StudentuGrupe &grupe, StudentuGrupe &vargsiukai, StudentuGrup
        for(const auto &A :grupe)
        {
             if(A.rez<5.0) {vargsiukai.push_back(A); grupe.pop_back();}
-            smartukai=grupe;
+            
        }
+        smartukai=grupe;
     }
    else if( rusiavimas == 3)
    {
